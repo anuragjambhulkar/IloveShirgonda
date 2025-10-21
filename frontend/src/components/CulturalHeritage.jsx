@@ -6,7 +6,7 @@ const CulturalHeritage = () => {
   const heritageItems = [
     {
       id: 1,
-      icon: FaTemple,
+      icon: FaChurch,
       title: 'Ancient Temples',
       description: 'Shrigonda is home to several ancient temples that showcase magnificent architecture and spiritual significance, dating back centuries.',
       image: 'https://images.unsplash.com/photo-1704019541434-550af5403e7f',
