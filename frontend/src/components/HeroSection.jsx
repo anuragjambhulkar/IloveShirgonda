@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaArrowDown, FaMapMarkerAlt, FaUsers, FaHeart } from 'react-icons/fa';
+import { Button } from './ui/button';
+import SplitText from './ui/splitText';
 
 const HeroSection = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -17,18 +19,22 @@ const HeroSection = () => {
     document.querySelector('#gallery')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const scrollToContact = () => {
+    document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Animated Background with Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#8B6F3B] via-[#C9933E] to-[#E74C3C]">
         {/* Animated mesh gradient overlay */}
-        <div 
+        <div
           className="absolute inset-0 opacity-30"
           style={{
             background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255,255,255,0.2) 0%, transparent 50%)`
           }}
         />
-        
+
         {/* Floating particles */}
         {[...Array(20)].map((_, i) => (
           <motion.div
@@ -54,7 +60,7 @@ const HeroSection = () => {
       </div>
 
       {/* Hero Image Overlay */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center mix-blend-multiply opacity-30"
         style={{
           backgroundImage: 'url(https://images.unsplash.com/photo-1622354573449-ce732931783f)'
@@ -78,9 +84,9 @@ const HeroSection = () => {
           >
             <div className="relative">
               <div className="absolute inset-0 bg-white rounded-full blur-3xl opacity-40"></div>
-              <img 
-                src="https://customer-assets.emergentagent.com/job_interactive-portal-1/artifacts/q7xfvvgj_logo.jpg" 
-                alt="I Love Shrigonda Logo" 
+              <img
+                src="/asset/logo_hero_section.png " // Directly reference the image from the public folder
+                alt="I Love Shrigonda Logo"
                 className="w-48 h-48 sm:w-64 sm:h-64 object-contain relative drop-shadow-2xl"
               />
             </div>
@@ -88,15 +94,16 @@ const HeroSection = () => {
 
           {/* Main Heading */}
           <div className="space-y-4">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="text-5xl sm:text-7xl md:text-8xl font-bold text-white drop-shadow-2xl"
-            >
-              Welcome to <span className="block mt-2 bg-gradient-to-r from-white via-amber-100 to-white bg-clip-text text-transparent">Shrigonda</span>
-            </motion.h1>
-            
+            <div className="text-5xl sm:text-7xl md:text-8xl font-bold drop-shadow-2xl flex flex-wrap justify-center items-center gap-3">
+              <SplitText
+                tag="h1"
+                text="Welcome to Shrigonda"
+                className="text-white inline-block"
+                splitType="chars"
+                delay={40}
+                useScrollTrigger={false}
+              />
+            </div>
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -141,22 +148,20 @@ const HeroSection = () => {
             transition={{ delay: 1 }}
             className="flex flex-wrap justify-center gap-4 pt-8"
           >
-            <motion.button
-              whileHover={{ scale: 1.05, boxShadow: '0 20px 60px rgba(0,0,0,0.3)' }}
-              whileTap={{ scale: 0.95 }}
+            <Button
+              borderRadius="1.75rem"
               onClick={scrollToGallery}
               className="px-8 py-4 bg-white text-[#C9933E] rounded-full font-bold text-lg shadow-2xl hover:bg-amber-50 transition-all"
             >
               Explore Gallery
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05, boxShadow: '0 20px 60px rgba(0,0,0,0.3)' }}
-              whileTap={{ scale: 0.95 }}
+            </Button>
+            <Button
+              borderRadius="1.75rem"
               onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
               className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white/10 transition-all backdrop-blur-sm"
             >
               Get In Touch
-            </motion.button>
+            </Button>
           </motion.div>
 
           {/* Scroll Indicator */}
@@ -174,7 +179,7 @@ const HeroSection = () => {
       {/* Bottom Wave */}
       <div className="absolute bottom-0 left-0 right-0">
         <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white"/>
+          <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white" />
         </svg>
       </div>
     </section>

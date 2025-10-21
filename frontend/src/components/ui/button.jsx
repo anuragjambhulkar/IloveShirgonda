@@ -1,48 +1,130 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva } from "class-variance-authority";
+"use client";
+import React, { useRef } from "react";
+import {
+  motion,
+  useAnimationFrame,
+  useMotionTemplate,
+  useMotionValue,
+  useTransform,
+} from "motion/react";
+import { cn } from "@/lib/utils";
 
-import { cn } from "@/lib/utils"
+export function Button({
+  borderRadius = "1.75rem",
+  children,
+  as: Component = "button",
+  containerClassName,
+  borderClassName,
+  duration,
+  className,
+  theme = "light", // "light" or "dark"
+  ...otherProps
+}) {
+  // Theme-specific color controls
+  const border = theme === "light" ? "border-[#C9933E]" : "border-white";
+  const background =
+    theme === "light"
+      ? "bg-white text-[#C9933E] hover:bg-amber-50"
+      : "bg-[#c87b2e]/70 text-white hover:bg-[#C9933E]/70";
+  const finalClass =
+    "relative flex h-full w-full items-center justify-center border-4 font-extrabold text-lg shadow-xl transition-all duration-200 " +
+    background +
+    " " +
+    border;
 
-const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
-  {
-    variants: {
-      variant: {
-        default:
-          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-        outline:
-          "border border-input shadow-sm hover:bg-accent hover:text-accent-foreground",
-        secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-      },
-      size: {
-        default: "h-9 px-4 py-2",
-        sm: "h-8 rounded-md px-3 text-xs",
-        lg: "h-10 rounded-md px-8",
-        icon: "h-9 w-9",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
-)
-
-const Button = React.forwardRef(({ className, variant, size, asChild = false, ...props }, ref) => {
-  const Comp = asChild ? Slot : "button"
   return (
-    <Comp
-      className={cn(buttonVariants({ variant, size, className }))}
-      ref={ref}
-      {...props} />
+    <Component
+      className={cn(
+        "relative h-16 w-44 overflow-hidden bg-transparent p-[2px] text-xl",
+        containerClassName
+      )}
+      style={{
+        borderRadius: borderRadius,
+      }}
+      {...otherProps}>
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ borderRadius: `calc(${borderRadius} * 0.96)` }}>
+        <MovingBorder
+          duration={duration}
+          rx="30%"
+          ry="30%"
+          color={theme === "light" ? "#C9933E" : "#fff"}
+        >
+          <div
+            className={cn(
+              "h-24 w-24 bg-[radial-gradient(theme(colors.amber.400)_40%,transparent_65%)] opacity-80",
+              borderClassName
+            )}
+          />
+        </MovingBorder>
+      </div>
+      <div
+        className={cn(finalClass, className)}
+        style={{
+          borderRadius: `calc(${borderRadius} * 0.96)`,
+        }}>
+        {children}
+      </div>
+    </Component>
   );
-})
-Button.displayName = "Button"
+}
 
-export { Button, buttonVariants }
+export const MovingBorder = ({
+  children,
+  duration = 3000,
+  rx,
+  ry,
+  color = "#E63946",
+  ...otherProps
+}) => {
+  const pathRef = useRef();
+  const progress = useMotionValue(0);
+
+  useAnimationFrame((time) => {
+    const length = pathRef.current?.getTotalLength();
+    if (length) {
+      const pxPerMillisecond = length / duration;
+      progress.set((time * pxPerMillisecond) % length);
+    }
+  });
+
+  const x = useTransform(progress, (val) => pathRef.current?.getPointAtLength(val)?.x || 0);
+  const y = useTransform(progress, (val) => pathRef.current?.getPointAtLength(val)?.y || 0);
+  const transform = useMotionTemplate`translateX(${x}px) translateY(${y}px) translateX(-50%) translateY(-50%)`;
+
+  return (
+    <>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="none"
+        className="absolute h-full w-full"
+        width="100%"
+        height="100%"
+        {...otherProps}
+      >
+        <rect
+          fill="none"
+          stroke={color}
+          strokeWidth="4"
+          width="100%"
+          height="100%"
+          rx={rx}
+          ry={ry}
+          ref={pathRef}
+        />
+      </svg>
+      <motion.div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          display: "inline-block",
+          transform,
+        }}
+      >
+        {children}
+      </motion.div>
+    </>
+  );
+};

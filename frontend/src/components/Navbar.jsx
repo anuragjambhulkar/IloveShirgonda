@@ -39,29 +39,30 @@ const Navbar = () => {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? 'bg-white/95 backdrop-blur-lg shadow-lg'
-            : 'bg-transparent'
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+          ? 'bg-white/65 backdrop-blur-xl shadow-lg'
+          : 'bg-transparent'
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            {/* Logo */}
             <motion.div
               whileHover={{ scale: 1.05 }}
               className="flex items-center space-x-3 cursor-pointer"
               onClick={() => scrollToSection('#hero')}
             >
-              <div className="relative">
+              <div className="relative flex items-center">
+                <h1 className={`text-3xl font-bold font-serif bg-gradient-to-r from-[#C9933E] to-[#E74C3C] bg-clip-text text-transparent`}>
+                  I &nbsp;
+                </h1>
                 <div className="absolute inset-0 bg-gradient-to-r from-[#C9933E] to-[#E74C3C] blur-lg opacity-30 rounded-full"></div>
                 <FaHeart className="text-3xl text-[#E74C3C] relative" />
               </div>
               <div>
-                <h1 className={`text-2xl font-bold bg-gradient-to-r from-[#C9933E] to-[#E74C3C] bg-clip-text text-transparent`}>
-                  I ❤️ Shrigonda
+                <h1 className={`text-2xl font-bold font-serif bg-gradient-to-r from-[#C9933E] to-[#E74C3C] bg-clip-text text-transparent`}>
+                  Shrigonda
                 </h1>
-                <p className="text-xs text-gray-600">Your Love for the City</p>
+                <p className="text-xs font-serif text-gray-600">Your Love for the City</p>
               </div>
             </motion.div>
 
@@ -76,11 +77,10 @@ const Navbar = () => {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                    isScrolled
-                      ? 'text-gray-700 hover:text-[#C9933E] hover:bg-[#C9933E]/10'
-                      : 'text-white hover:bg-white/20'
-                  }`}
+                  className={`px-4 py-2 rounded-lg font-medium transition-all ${isScrolled
+                    ? 'text-gray-700 hover:text-[#C9933E] hover:bg-[#C9933E]/10'
+                    : 'text-white hover:bg-white/20'
+                    }`}
                 >
                   {item.name}
                 </motion.button>
