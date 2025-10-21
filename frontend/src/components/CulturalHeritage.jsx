@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaLandmark, FaHistory, FaTemple } from 'react-icons/fa';
+import { FaLandmark, FaHistory, FaChurch } from 'react-icons/fa';
 
 const CulturalHeritage = () => {
   const heritageItems = [
