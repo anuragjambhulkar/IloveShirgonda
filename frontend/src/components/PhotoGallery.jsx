@@ -39,42 +39,42 @@ const PhotoGallery = () => {
     {
       id: '1',
       title: 'Village Lake View',
-      category: 'Nature',
+      category: 'Collage',
       image_url: 'https://images.unsplash.com/photo-1622354573449-ce732931783f',
       description: 'Beautiful village landscape with serene lake'
     },
     {
       id: '2',
       title: 'Rural Roads',
-      category: 'Nature',
+      category: 'Collage',
       image_url: 'https://images.unsplash.com/photo-1651678938586-affccc71c270',
       description: 'Scenic rural road surrounded by nature'
     },
     {
       id: '3',
       title: 'Village Life',
-      category: 'People',
+      category: 'collage',
       image_url: 'https://images.unsplash.com/photo-1634874706682-3468a6e421ba',
       description: 'Traditional village life with cattle'
     },
     {
       id: '4',
       title: 'Traditional Architecture',
-      category: 'Heritage',
+      category: 'StBusstand',
       image_url: 'https://images.pexels.com/photos/259780/pexels-photo-259780.jpeg',
       description: 'Beautiful traditional village architecture'
     },
     {
       id: '5',
       title: 'Kanheri Caves',
-      category: 'Heritage',
+      category: 'Dharmveerford',
       image_url: 'https://images.unsplash.com/photo-1751964383659-27cd4c303bdb',
       description: 'Ancient Maharashtra heritage site'
     },
     {
       id: '6',
       title: 'Temple Architecture',
-      category: 'Heritage',
+      category: 'shrisantshaikhmohmomadmaharaj',
       image_url: 'https://images.unsplash.com/photo-1704019541434-550af5403e7f',
       description: 'Traditional temple in the village'
     },

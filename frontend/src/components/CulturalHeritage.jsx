@@ -6,27 +6,39 @@ const CulturalHeritage = () => {
   const heritageItems = [
     {
       id: 1,
-      icon: FaChurch,
-      title: 'Ancient Temples',
-      description: 'Shrigonda is home to several ancient temples that showcase magnificent architecture and spiritual significance, dating back centuries.',
-      image: 'https://images.unsplash.com/photo-1704019541434-550af5403e7f',
-      facts: ['Over 500 years old', 'Unique architecture', 'Spiritual center']
+      icon: FaHistory,
+      title: 'Shri Sant Shaikh Mohmand Maharaj',
+      description: 'Shri Sant Shaikh Mohmand Maharaj was a revered spiritual leader known for his deep wisdom, compassion, and guidance. Celebrated for his teachings on devotion, selflessness, and service to humanity, he inspired countless followers to lead a life of righteousness and inner peace. His life and works continue to be a beacon of spiritual enlightenment, drawing devotees from far and wide to seek blessings and spiritual knowledge.',
+      image: 'https://images.unsplash.com/photo-1601758123927-0f7d9f042cc7', // replace with actual image if available
+      facts: [
+        'Renowned spiritual leader',
+        'Guided followers in devotion and selfless service',
+        'Inspires spiritual seekers across the region'
+      ]
     },
     {
       id: 2,
-      icon: FaHistory,
-      title: 'Rich History',
-      description: 'Our village has a glorious past with connections to Maratha Empire and has witnessed significant historical events.',
-      image: 'https://images.unsplash.com/photo-1751964383659-27cd4c303bdb',
-      facts: ['Maratha heritage', 'Historic landmarks', 'Cultural preservation']
+      icon: FaHistory, // Suitable icon for fort/historical site
+      title: 'Pedgaon Fort (Bahadurgad/Dharmaveergad)',
+      description: 'Situated approximately 22 km south of Shrigonda, Pedgaon Fort stands as a testament to the region\'s strategic importance. The fort houses five temples, including the Lakshmi Narayan and Baleshwar temples, showcasing intricately carved pillars and historical remnants from bygone eras.',
+      image: 'https://images.openai.com/static-rsc-1/13c8e0d6-1e6f-4b8f-bd8d-8c8d2c8d8c8d.jpg',
+      facts: [
+        'Historical fort with 5 temples',
+        'Intricate architecture and carvings',
+        'Strategically important in history'
+      ]
     },
     {
       id: 3,
       icon: FaLandmark,
-      title: 'Traditional Arts',
-      description: 'Shrigonda preserves traditional arts, crafts, and cultural practices passed down through generations.',
-      image: 'https://images.unsplash.com/photo-1663513844814-5f2fd51e957a',
-      facts: ['Folk dances', 'Traditional music', 'Handicrafts']
+      title: 'Hemadpanti Temples',
+      description: 'Shrigonda is home to four Hemadpanti temples, showcasing the distinctive Hemadpanthi architectural style characterized by black stone construction without mortar. These 13th-century temples reflect the region\'s rich cultural and religious heritage.',
+      image: 'https://images.openai.com/static-rsc-1/13c8e0d6-1e6f-4b8f-bd8d-8c8d2c8d8c8d.jpg',
+      facts: [
+        'Distinctive Hemadpanthi architecture',
+        'Built using black stone without mortar',
+        'Dating back to 13th century'
+      ]
     }
   ];
 
@@ -56,9 +68,8 @@ const CulturalHeritage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.2 }}
-              className={`flex flex-col ${
-                index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
-              } gap-8 items-center`}
+              className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
+                } gap-8 items-center`}
             >
               {/* Image */}
               <motion.div
