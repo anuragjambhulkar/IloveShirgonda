@@ -1,44 +1,44 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaMapMarkedAlt, FaMountain, FaWater, FaTree } from 'react-icons/fa';
+import { FaLandmark, FaVihara, FaWater, FaGopuram } from 'react-icons/fa';
 
 const TouristAttractions = () => {
   const attractions = [
     {
       id: 1,
-      name: 'Shrigonda Lake',
-      category: 'Nature',
-      icon: FaWater,
-      description: 'A serene lake perfect for morning walks, bird watching, and peaceful reflection. A favorite spot for locals and visitors alike.',
-      image: 'https://images.unsplash.com/photo-1622354573449-ce732931783f',
-      highlights: ['Bird Watching', 'Boating', 'Sunrise Views']
+      name: 'Pedgaon Fort (Bahadurgad)',
+      category: 'Historic',
+      icon: FaLandmark,
+      description: 'A historic fort also known as Bahadurgad, with five temples. It is a significant architectural and historical site in Shrigonda.',
+      image: '/asset/Dharmveer_ford.jpg',
+      highlights: ['History', 'Architecture', 'Temples']
     },
     {
       id: 2,
-      name: 'Historic Temples',
+      name: 'Shri Sant Shaikh Mohammad Maharaj Temple',
       category: 'Religious',
-      icon: FaTree,
-      description: 'Ancient temples with stunning architecture showcasing the spiritual and artistic heritage of the region.',
-      image: 'https://images.unsplash.com/photo-1524229648276-e66561fe45a9',
-      highlights: ['Architecture', 'Spirituality', 'History']
+      icon: FaVihara,
+      description: 'A revered shrine dedicated to Sant Shaikh Mohammad Maharaj, a prominent saint of the Warkari tradition. A place of spiritual significance.',
+      image: '/asset/SHRI SANT SHAIKH MOHAMMAD MAHARAJ.jpeg',
+      highlights: ['Spirituality', 'History', 'Pilgrimage']
     },
     {
       id: 3,
-      name: 'Village Trails',
-      category: 'Adventure',
-      icon: FaMountain,
-      description: 'Scenic trails through lush farmlands and countryside, offering authentic village experience and natural beauty.',
-      image: 'https://images.unsplash.com/photo-1651678938586-affccc71c270',
-      highlights: ['Nature Walks', 'Photography', 'Rural Life']
+      name: 'Pazhar Lake',
+      category: 'Nature',
+      icon: FaWater,
+      description: 'A beautiful lake, also known as Pazhar Talav, offering scenic views and a peaceful environment. It is a popular spot for relaxation and picnics.',
+      image: 'https://images.unsplash.com/photo-1507525428034-b723a9ce6899',
+      highlights: ['Scenic Views', 'Relaxation', 'Picnics']
     },
     {
       id: 4,
-      name: 'Local Markets',
-      category: 'Culture',
-      icon: FaMapMarkedAlt,
-      description: 'Vibrant local markets offering fresh produce, traditional crafts, and authentic village experience.',
-      image: 'https://images.unsplash.com/photo-1672603586237-343746cfb8fe',
-      highlights: ['Shopping', 'Local Food', 'Handicrafts']
+      name: 'Siddheshwar Temple, Mandavgan',
+      category: 'Religious',
+      icon: FaGopuram,
+      description: 'An ancient temple at the confluence of the Kataksh and Vataksh rivers, with a tomb of Mandav Rishi and structures built by Ahilyabai Holkar.',
+      image: '/asset/SHRIGONDA MANDIR.jpeg',
+      highlights: ['Ancient Temple', 'River Confluence', 'Architecture']
     }
   ];
 
@@ -52,7 +52,7 @@ const TouristAttractions = () => {
           viewport={{ once: true }}
           className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            Tourist <span className="bg-gradient-to-r from-[#C9933E] to-[#E74C3C] bg-clip-text text-transparent">Attractions</span>
+            Tourist <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">Attractions</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Explore the must-visit places and hidden gems of Shrigonda
@@ -121,7 +121,7 @@ const TouristAttractions = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="mt-4 w-full py-3 bg-gradient-to-r from-[#C9933E] to-[#E74C3C] text-white rounded-xl font-bold hover:shadow-lg transition-all"
+                  className="mt-4 w-full py-3 bg-gradient-to-r from-red-500 to-red-700 text-white rounded-xl font-bold hover:shadow-lg transition-all"
                 >
                   Visit Now
                 </motion.button>

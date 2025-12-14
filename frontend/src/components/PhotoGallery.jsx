@@ -12,7 +12,7 @@ const PhotoGallery = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const categories = ['All', 'Heritage', 'Festivals', 'Nature', 'People', 'Events', 'Food'];
+  const categories = ['All', 'College', 'StBusstand', 'Dharmveerford', 'People', 'Events', 'Food'];
 
   useEffect(() => {
     fetchGalleryImages();
@@ -38,87 +38,80 @@ const PhotoGallery = () => {
   const mockImages = [
     {
       id: '1',
-      title: 'Village Lake View',
-      category: 'Collage',
-      image_url: 'https://images.unsplash.com/photo-1622354573449-ce732931783f',
-      description: 'Beautiful village landscape with serene lake'
+      title: 'Pedgaon Fort',
+      category: 'Dharmveerford',
+      image_url: '/asset/Dharmveer_ford.jpg',
+      description: 'Historic Pedgaon Fort, also known as Dharmveer Gad.'
     },
     {
       id: '2',
-      title: 'Rural Roads',
-      category: 'Collage',
-      image_url: 'https://images.unsplash.com/photo-1651678938586-affccc71c270',
-      description: 'Scenic rural road surrounded by nature'
+      title: 'Pedgaon Fort Entrance',
+      category: 'Dharmveerford',
+      image_url: '/asset/DHARMVEER FORD.jpg',
+      description: 'The grand entrance to the historic Pedgaon Fort.'
     },
     {
       id: '3',
-      title: 'Village Life',
-      category: 'collage',
-      image_url: 'https://images.unsplash.com/photo-1634874706682-3468a6e421ba',
-      description: 'Traditional village life with cattle'
+      title: 'Shri Sant Shaikh Mohammad Maharaj Temple',
+      category: 'People',
+      image_url: '/asset/SHRI SANT SHAIKH MOHAMMAD MAHARAJ.jpeg',
+      description: 'A revered shrine in Shrigonda.'
     },
     {
       id: '4',
-      title: 'Traditional Architecture',
-      category: 'StBusstand',
-      image_url: 'https://images.pexels.com/photos/259780/pexels-photo-259780.jpeg',
-      description: 'Beautiful traditional village architecture'
+      title: 'Shrigonda Temple',
+      category: 'Events',
+      image_url: '/asset/SHRIGONDA MANDIR.jpeg',
+      description: 'A beautiful temple in Shrigonda, a center for local events.'
     },
     {
       id: '5',
-      title: 'Kanheri Caves',
-      category: 'Dharmveerford',
-      image_url: 'https://images.unsplash.com/photo-1751964383659-27cd4c303bdb',
-      description: 'Ancient Maharashtra heritage site'
+      title: 'Shrigonda Town',
+      category: 'StBusstand',
+      image_url: '/asset/SHRIGONDA.jpeg',
+      description: 'A view of Shrigonda town.'
     },
     {
       id: '6',
-      title: 'Temple Architecture',
-      category: 'shrisantshaikhmohmomadmaharaj',
-      image_url: 'https://images.unsplash.com/photo-1704019541434-550af5403e7f',
-      description: 'Traditional temple in the village'
+      title: 'Pedgaon Fort View',
+      category: 'Dharmveerford',
+      image_url: '/asset/Dharmveer Gad pedgoan.jpeg',
+      description: 'A scenic view from Pedgaon Fort.'
     },
     {
       id: '7',
-      title: 'Hawa Mahal',
-      category: 'Heritage',
-      image_url: 'https://images.unsplash.com/photo-1524229648276-e66561fe45a9',
-      description: 'Historic Indian architecture'
+      title: 'Another view of Pedgaon Fort',
+      category: 'Dharmveerford',
+      image_url: '/asset/Dharmveer Gad pedgoan.jpeg',
+      description: 'Architectural details of Pedgaon Fort.'
     },
-    {
+     {
       id: '8',
-      title: 'Traditional Door',
-      category: 'Heritage',
-      image_url: 'https://images.unsplash.com/photo-1663513844814-5f2fd51e957a',
-      description: 'Beautiful ornate traditional door'
+      title: 'Random image',
+      category: 'Events',
+      image_url: '/asset/images (7).jpeg',
+      description: 'A random image.'
     },
     {
       id: '9',
-      title: 'Diwali Celebration',
-      category: 'Festivals',
-      image_url: 'https://images.unsplash.com/photo-1592843997881-cab3860b1067',
-      description: 'Festival of lights celebration'
+      title: 'Shri Chhatrapati Shivaji Mahavidyalaya',
+      category: 'College',
+      image_url: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1',
+      description: 'One of the prominent colleges in Shrigonda, offering a range of courses.'
     },
     {
       id: '10',
-      title: 'Festival Lighting',
-      category: 'Festivals',
-      image_url: 'https://images.unsplash.com/photo-1721924275114-2c4d3e8a0fde',
-      description: 'Traditional festival lighting ceremony'
+      title: 'Maharaja Jivajirao Shinde Arts, Science & Commerce College',
+      category: 'College',
+      image_url: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f',
+      description: 'A well-known college for arts, science, and commerce education.'
     },
     {
       id: '11',
-      title: 'Durga Puja',
-      category: 'Festivals',
-      image_url: 'https://images.unsplash.com/photo-1603646315726-5aad1908e00d',
-      description: 'Durga Puja celebration'
-    },
-    {
-      id: '12',
-      title: 'Village Festival',
-      category: 'Festivals',
-      image_url: 'https://images.pexels.com/photos/31203526/pexels-photo-31203526.jpeg',
-      description: 'Community festival celebration'
+      title: 'Soniya Gandhi Polytechnic',
+      category: 'College',
+      image_url: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f',
+      description: 'A polytechnic college providing technical education to students.'
     }
   ];
 
@@ -137,7 +130,7 @@ const PhotoGallery = () => {
           className="text-center mb-12"
         >
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            Photo <span className="bg-gradient-to-r from-[#C9933E] to-[#E74C3C] bg-clip-text text-transparent">Gallery</span>
+            Photo <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">Gallery</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Explore the beauty and culture of Shrigonda through our lens
@@ -159,7 +152,7 @@ const PhotoGallery = () => {
               onClick={() => setSelectedCategory(category)}
               className={`px-6 py-3 rounded-full font-medium transition-all ${
                 selectedCategory === category
-                  ? 'bg-gradient-to-r from-[#C9933E] to-[#E74C3C] text-white shadow-lg'
+                  ? 'bg-gradient-to-r from-red-500 to-red-700 text-white shadow-lg'
                   : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
               }`}
             >

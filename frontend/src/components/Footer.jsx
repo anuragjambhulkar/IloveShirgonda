@@ -40,7 +40,7 @@ const Footer = () => {
           >
             <div className="flex items-center space-x-3">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-[#C9933E] to-[#E74C3C] blur-lg opacity-30 rounded-full"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-700 blur-lg opacity-30 rounded-full"></div>
                 <FaHeart className="text-3xl text-[#E74C3C] relative" />
               </div>
               <div>
@@ -107,14 +107,14 @@ const Footer = () => {
               </li>
               <li className="flex items-center space-x-3">
                 <FaPhone className="text-[#C9933E] flex-shrink-0" />
-                <a href="tel:+919876543210" className="text-white/80 hover:text-[#C9933E] transition-colors">
-                  +91 98765 43210
+                <a href="tel:+919307840449" className="text-white/80 hover:text-[#C9933E] transition-colors">
+                  +91 93078 40449
                 </a>
               </li>
               <li className="flex items-center space-x-3">
                 <FaEnvelope className="text-[#E74C3C] flex-shrink-0" />
-                <a href="mailto:hello@iloveshrigonda.com" className="text-white/80 hover:text-[#C9933E] transition-colors">
-                  hello@iloveshrigonda.com
+                <a href="mailto:iloveshrigonda96@gmail.com" className="text-white/80 hover:text-[#C9933E] transition-colors">
+                  iloveshrigonda96@gmail.com
                 </a>
               </li>
             </ul>
@@ -140,7 +140,7 @@ const Footer = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-6 py-2 bg-gradient-to-r from-[#C9933E] to-[#E74C3C] rounded-r-lg font-bold hover:shadow-lg transition-all"
+                className="px-6 py-2 bg-gradient-to-r from-red-500 to-red-700 rounded-r-lg font-bold hover:shadow-lg transition-all"
               >
                 Subscribe
               </motion.button>
@@ -154,8 +154,8 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-white/60 text-sm text-center md:text-left">
-              © {new Date().getFullYear()} I Love Shrigonda. All rights reserved. Made with{' '}
-              <FaHeart className="inline text-[#E74C3C] animate-pulse" /> for Shrigonda
+              © {new Date().getFullYear()} I Love Shrigonda. All rights reserved. I {' '}
+              <FaHeart className="inline text-[#E74C3C] animate-pulse" /> Shrigonda
             </p>
             <div className="flex space-x-6 text-sm">
               <button className="text-white/60 hover:text-white transition-colors">

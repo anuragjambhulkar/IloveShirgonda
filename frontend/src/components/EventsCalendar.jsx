@@ -34,51 +34,51 @@ const EventsCalendar = () => {
   const mockEvents = [
     {
       id: '1',
-      title: 'Diwali Festival Celebration',
-      description: 'Grand Diwali celebration with traditional rituals, fireworks, and community feast. Join us for this spectacular festival of lights.',
-      event_date: '2025-10-25',
-      location: 'Village Temple',
-      image_url: 'https://images.unsplash.com/photo-1592843997881-cab3860b1067'
+      title: 'Weekly Market (Athawadi Bazar)',
+      description: 'The vibrant weekly market where farmers and traders sell fresh produce, groceries, and household items. A central event for the local community.',
+      event_date: '2025-11-02', // Assuming it happens on a Sunday
+      location: 'Main Market Square, Shrigonda',
+      image_url: '/asset/SHRIGONDA.jpeg'
     },
     {
       id: '2',
-      title: 'Farmers Market',
-      description: 'Weekly farmers market featuring fresh organic produce, traditional handicrafts, and local delicacies.',
-      event_date: '2025-09-15',
-      location: 'Main Market Square',
-      image_url: 'https://images.unsplash.com/photo-1672603586237-343746cfb8fe'
+      title: 'Shaikh Mohammad Maharaj Yatra',
+      description: 'The annual yatra (pilgrimage) to honor Shri Sant Shaikh Mohammad Maharaj. The event includes a palanquin procession, kirtans, and a large fair.',
+      event_date: '2025-11-15', // Placeholder date
+      location: 'Shri Sant Shaikh Mohammad Maharaj Temple, Shrigonda',
+      image_url: '/asset/SHRI SANT SHAIKH MOHAMMAD MAHARAJ.jpeg'
     },
     {
       id: '3',
-      title: 'Cultural Music Night',
-      description: 'Evening of traditional Maharashtrian music and dance performances by local artists and visiting performers.',
-      event_date: '2025-09-20',
-      location: 'Community Center',
-      image_url: 'https://images.unsplash.com/photo-1603646315726-5aad1908e00d'
+      title: 'Diwali Pahat',
+      description: 'A special morning celebration on the first day of Diwali, with music, cultural programs, and community gatherings to welcome the festival of lights.',
+      event_date: '2025-10-31', // Diwali date
+      location: 'Shrigonda Town Center',
+      image_url: '/asset/images (7).jpeg'
     },
     {
       id: '4',
-      title: 'Heritage Walk',
-      description: 'Guided tour of historic temples and monuments with insights into village history and architecture.',
-      event_date: '2025-09-10',
-      location: 'Temple Complex',
-      image_url: 'https://images.unsplash.com/photo-1704019541434-550af5403e7f'
+      title: 'Pedgaon Fort Heritage Walk',
+      description: 'A guided tour of the historic Pedgaon Fort (Bahadurgad), exploring its temples, architecture, and strategic importance in Maratha history.',
+      event_date: '2025-11-22',
+      location: 'Pedgaon Fort, Shrigonda',
+      image_url: '/asset/Dharmveer_ford.jpg'
     },
     {
       id: '5',
-      title: 'Sports Tournament',
-      description: 'Inter-village cricket tournament with teams from neighboring villages. Refreshments and prizes for winners.',
-      event_date: '2025-09-30',
-      location: 'Village Grounds',
-      image_url: 'https://images.unsplash.com/photo-1622354573449-ce732931783f'
+      title: 'Krishi Pradarshan (Agricultural Exhibition)',
+      description: 'An exhibition for farmers showcasing the latest agricultural technology, seeds, and fertilizers. Includes workshops and demonstrations.',
+      event_date: '2025-12-05',
+      location: 'Krishi Utpanna Bazar Samiti, Shrigonda',
+      image_url: '/asset/Dharmveer Gad pedgoan 1.jpg' // Using a generic nature image
     },
     {
       id: '6',
-      title: 'Craft Fair',
-      description: 'Showcase of traditional handicrafts, pottery, and artwork by local artisans. Opportunity to purchase unique pieces.',
-      event_date: '2025-10-05',
-      location: 'Arts Colony',
-      image_url: 'https://images.unsplash.com/photo-1663513844814-5f2fd51e957a'
+      title: 'Siddheshwar Temple Festival',
+      description: 'The annual festival at the ancient Siddheshwar Temple in Mandavgan, featuring religious ceremonies and a local fair.',
+      event_date: '2025-12-12',
+      location: 'Siddheshwar Temple, Mandavgan',
+      image_url: '/asset/SHRIGONDA MANDIR.jpeg'
     }
   ];
 
@@ -92,7 +92,7 @@ const EventsCalendar = () => {
           viewport={{ once: true }}
           className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            Events <span className="bg-gradient-to-r from-[#C9933E] to-[#E74C3C] bg-clip-text text-transparent">Calendar</span>
+            Events <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">Calendar</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Upcoming festivals, cultural events, and community gatherings
@@ -157,7 +157,7 @@ const EventsCalendar = () => {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="mt-4 w-full py-3 bg-gradient-to-r from-[#C9933E] to-[#E74C3C] text-white rounded-xl font-bold hover:shadow-lg transition-all"
+                    className="mt-4 w-full py-3 bg-gradient-to-r from-red-500 to-red-700 text-white rounded-xl font-bold hover:shadow-lg transition-all"
                   >
                     View Details
                   </motion.button>

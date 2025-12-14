@@ -68,7 +68,7 @@ const CommunityStories = () => {
           viewport={{ once: true }}
           className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            Community <span className="bg-gradient-to-r from-[#C9933E] to-[#E74C3C] bg-clip-text text-transparent">Stories</span>
+            Community <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">Stories</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Hear from the hearts of our community members
@@ -146,7 +146,7 @@ const CommunityStories = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-[#C9933E] to-[#E74C3C] rounded-3xl p-12 text-white">
+          <div className="bg-gradient-to-r from-red-500 to-red-700 rounded-3xl p-12 text-white">
             <h3 className="text-3xl font-bold mb-4">Share Your Story</h3>
             <p className="text-xl mb-8 max-w-2xl mx-auto">
               Have a special memory or experience from Shrigonda? We'd love to hear from you!

@@ -117,7 +117,7 @@ const LocalBusinesses = () => {
           viewport={{ once: true }}
           className="text-center mb-12">
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            Local <span className="bg-gradient-to-r from-[#C9933E] to-[#E74C3C] bg-clip-text text-transparent">Businesses</span>
+            Local <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">Businesses</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Support our local businesses and discover authentic village services
@@ -138,7 +138,7 @@ const LocalBusinesses = () => {
               onClick={() => setSelectedCategory(category)}
               className={`px-6 py-3 rounded-full font-medium transition-all ${
                 selectedCategory === category
-                  ? 'bg-gradient-to-r from-[#C9933E] to-[#E74C3C] text-white shadow-lg'
+                  ? 'bg-gradient-to-r from-red-500 to-red-700 text-white shadow-lg'
                   : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
               }`}
             >
@@ -210,7 +210,7 @@ const LocalBusinesses = () => {
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="mt-4 w-full py-2 bg-gradient-to-r from-[#C9933E] to-[#E74C3C] text-white rounded-lg font-medium hover:shadow-lg transition-all"
+                      className="mt-4 w-full py-2 bg-gradient-to-r from-red-500 to-red-700 text-white rounded-lg font-medium hover:shadow-lg transition-all"
                     >
                       Contact Business
                     </motion.button>

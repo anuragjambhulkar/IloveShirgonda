@@ -52,14 +52,14 @@ const Navbar = () => {
               onClick={() => scrollToSection('#hero')}
             >
               <div className="relative flex items-center">
-                <h1 className={`text-3xl font-bold font-serif bg-gradient-to-r from-[#C9933E] to-[#E74C3C] bg-clip-text text-transparent`}>
+                <h1 className={`text-3xl font-bold font-serif bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent`}>
                   I &nbsp;
                 </h1>
-                <div className="absolute inset-0 bg-gradient-to-r from-[#C9933E] to-[#E74C3C] blur-lg opacity-30 rounded-full"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-700 blur-lg opacity-30 rounded-full"></div>
                 <FaHeart className="text-3xl text-[#E74C3C] relative" />
               </div>
               <div>
-                <h1 className={`text-2xl font-bold font-serif bg-gradient-to-r from-[#C9933E] to-[#E74C3C] bg-clip-text text-transparent`}>
+                <h1 className={`text-2xl font-bold font-serif bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent`}>
                   Shrigonda
                 </h1>
                 <p className="text-xs font-serif text-gray-600">Your Love for the City</p>

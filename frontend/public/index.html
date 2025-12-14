@@ -7,13 +7,134 @@
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="A product of emergent.sh" />
     <title>I ❤️ Shrigonda</title>
-    <script src="https://assets.emergent.sh/scripts/emergent-main.js"></script>
-    <script src="https://unpkg.com/rrweb@latest/dist/rrweb.min.js"></script>
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="5af52e10-9fd7-4817-afdd-e02a5cae8a1e"
+        data-blockingmode="auto" type="text/javascript" async></script>
+
+    <script>
+        // gtag + Consent Mode setup: default to denied until user consents
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+
+        // Function to map Cookiebot consent to gtag consent updates
+        function updateGtagConsentFromCookiebot() {
+            var cb = window.Cookiebot && window.Cookiebot.consent ? window.Cookiebot.consent : null;
+            if (!cb) return;
+            gtag('consent', 'update', {
+                'ad_storage': cb.marketing ? 'granted' : 'denied',
+                'analytics_storage': cb.statistics ? 'granted' : 'denied',
+                'functionality_storage': cb.preferences ? 'granted' : 'denied',
+                'personalization_storage': cb.preferences ? 'granted' : 'denied'
+            });
+        }
+
+        // Default consent: block ad & analytics storage until user gives consent
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'analytics_storage': 'denied',
+            'functionality_storage': 'denied',
+            'personalization_storage': 'denied',
+            'security_storage': 'granted'
+        });
+
+        // Run immediately in case Cookiebot already has consent recorded
+        try { updateGtagConsentFromCookiebot(); } catch (e) { /* safe fallback */ }
+
+        // Listen for Cookiebot consent updates and map to gtag consent
+        window.addEventListener('CookieConsentDeclaration', updateGtagConsentFromCookiebot, false);
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-E0YG22BBCQ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-E0YG22BBCQ');
+    </script>
+    <style>
+        /* Simple consent popup styles */
+        #consent-popup {
+            position: fixed;
+            left: 16px;
+            right: 16px;
+            bottom: 16px;
+            background: #fff;
+            color: #111;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            padding: 16px;
+            z-index: 99999;
+            max-width: 960px;
+            margin: 0 auto;
+            display: none;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+        }
+
+        #consent-popup .actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-top: 12px
+        }
+
+        #consent-popup button {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            cursor: pointer
+        }
+
+        #consent-popup .btn-primary {
+            background: #0b69ff;
+            color: #fff;
+            border: none
+        }
+
+        #consent-popup .preferences {
+            margin-top: 8px;
+            border-top: 1px solid #eee;
+            padding-top: 8px
+        }
+
+        #consent-popup label {
+            display: flex;
+            gap: 8px;
+            align-items: center
+        }
+    </style>
 </head>
 
 <body>
     <div id="root"></div>
-    <a id="emergent-badge" target="_blank" href="https://app.emergent.sh/?utm_source=emergent-badge" style="
+
+    <!-- Simple consent popup (shows when no saved consent) -->
+    <div id="consent-popup" role="dialog" aria-live="polite">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+                <strong>We value your privacy</strong>
+                <div style="font-size:13px;color:#444;margin-top:6px">We and our partners use cookies to personalize
+                    content, analyze traffic and for advertising. Choose your preferences.</div>
+            </div>
+            <div style="margin-left:12px">
+                <button id="consent-close" title="Close" aria-label="Close"
+                    style="background:transparent;border:none;font-size:18px;">✕</button>
+            </div>
+        </div>
+
+        <div class="preferences" id="consent-preferences" style="display:none">
+            <label><input type="checkbox" id="consent-analytics" /> Allow analytics (statistics)</label>
+            <label><input type="checkbox" id="consent-marketing" /> Allow marketing (ads)</label>
+            <label><input type="checkbox" id="consent-functional" /> Allow functionality/personalization</label>
+        </div>
+
+        <div class="actions">
+            <button id="btn-customize">Customize</button>
+            <button id="btn-reject">Reject All</button>
+            <button id="btn-accept" class="btn-primary">Accept All</button>
+        </div>
+    </div>
+    <!-- <a id="emergent-badge" target="_blank" href="https://" style="
                 display: flex !important;
                 align-items: center !important;
                 position: fixed !important;
@@ -45,11 +166,12 @@
                         align-items: center;
                         margin-bottom: 0;
                     ">
-                Made with AnuragJambhulkar
+                Contact To dev
             </p>
         </div>
-    </a>
+    </a> -->
     <script>
+        // PostHog loader (stub) — do not auto-init here; init only after consent
         !(function (t, e) {
             var o, n, p, r;
             e.__SV ||
@@ -111,10 +233,143 @@
                     }),
                     (e.__SV = 1));
         })(document, window.posthog || []);
-        posthog.init("phc_yJW1VjHGGwmCbbrtczfqqNxgBDbhlhOWcdzcIJEOTFE", {
-            api_host: "https://us.i.posthog.com",
-            person_profiles: "identified_only", // or 'always' to create profiles for anonymous users as well
-        });
+
+        // PostHog init helper — call only when analytics consent is present
+        function initPosthogIfAllowed() {
+            try {
+                var cb = window.Cookiebot && window.Cookiebot.consent ? window.Cookiebot.consent : null;
+                if (cb && cb.statistics) {
+                    if (window.posthog && typeof window.posthog.init === 'function') {
+                        // initialize PostHog with same options used previously
+                        posthog.init("phc_yJW1VjHGGwmCbbrtczfqqNxgBDbhlhOWcdzcIJEOTFE", {
+                            api_host: "https://us.i.posthog.com",
+                            person_profiles: "identified_only"
+                        });
+                    }
+                }
+            } catch (e) {
+                // ignore errors during consent check
+            }
+        }
+
+        // Try on load in case consent already exists
+        initPosthogIfAllowed();
+
+        // Also run when Cookiebot updates consent
+        window.addEventListener('CookieConsentDeclaration', function () {
+            updateGtagConsentFromCookiebot();
+            initPosthogIfAllowed();
+        }, false);
+    </script>
+
+    <script>
+        // Custom consent popup fallback (localStorage-based) in case Cookiebot doesn't popup
+        (function () {
+            var STORAGE_KEY = 'site_consent_v1';
+
+            function readStoredConsent() {
+                try { return JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch (e) { return null; }
+            }
+            function saveStoredConsent(obj) {
+                try { localStorage.setItem(STORAGE_KEY, JSON.stringify(obj)); } catch (e) { }
+            }
+
+            function updateGtagConsentFromLocal() {
+                var c = readStoredConsent();
+                if (!c) return;
+                try {
+                    gtag('consent', 'update', {
+                        'ad_storage': c.marketing ? 'granted' : 'denied',
+                        'analytics_storage': c.statistics ? 'granted' : 'denied',
+                        'functionality_storage': c.preferences ? 'granted' : 'denied',
+                        'personalization_storage': c.preferences ? 'granted' : 'denied'
+                    });
+                } catch (e) { }
+            }
+
+            function applyPosthogFromLocal() {
+                var c = readStoredConsent();
+                if (c && c.statistics) {
+                    try { initPosthogIfAllowed(); } catch (e) { }
+                }
+            }
+
+            function showPopup() {
+                var popup = document.getElementById('consent-popup');
+                if (!popup) return;
+                popup.style.display = 'block';
+                var pref = document.getElementById('consent-preferences');
+                var btnCustomize = document.getElementById('btn-customize');
+                var btnClose = document.getElementById('consent-close');
+
+                btnCustomize.addEventListener('click', function () {
+                    pref.style.display = pref.style.display === 'none' ? 'block' : 'none';
+                });
+
+                document.getElementById('btn-accept').addEventListener('click', function () {
+                    var consent = { marketing: true, statistics: true, preferences: true };
+                    saveStoredConsent(consent);
+                    updateGtagConsentFromLocal();
+                    applyPosthogFromLocal();
+                    popup.style.display = 'none';
+                });
+
+                document.getElementById('btn-reject').addEventListener('click', function () {
+                    var consent = { marketing: false, statistics: false, preferences: false };
+                    saveStoredConsent(consent);
+                    updateGtagConsentFromLocal();
+                    popup.style.display = 'none';
+                });
+
+                document.getElementById('btn-customize').addEventListener('click', function () {
+                    var pref = document.getElementById('consent-preferences');
+                    pref.style.display = 'block';
+                    // change customize button into Save button
+                    this.textContent = 'Save preferences';
+                    this.removeEventListener('click', arguments.callee);
+                    this.addEventListener('click', function () {
+                        var consent = {
+                            statistics: document.getElementById('consent-analytics').checked,
+                            marketing: document.getElementById('consent-marketing').checked,
+                            preferences: document.getElementById('consent-functional').checked
+                        };
+                        saveStoredConsent(consent);
+                        updateGtagConsentFromLocal();
+                        applyPosthogFromLocal();
+                        document.getElementById('consent-popup').style.display = 'none';
+                    });
+                });
+
+                btnClose.addEventListener('click', function () { popup.style.display = 'none'; });
+            }
+
+            // On load, if Cookiebot hasn't stored consent and we have no stored consent, show popup
+            document.addEventListener('DOMContentLoaded', function () {
+                var cb = window.Cookiebot && window.Cookiebot.consent ? window.Cookiebot.consent : null;
+                var stored = readStoredConsent();
+                // Developer convenience: force-show popup on localhost or with ?showConsent=1
+                var forceShow = /[?&](showConsent|resetConsent)=1/.test(location.search) || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+                if (forceShow) {
+                    showPopup();
+                    return;
+                }
+
+                if (!cb && !stored) {
+                    // show our custom popup
+                    showPopup();
+                } else {
+                    // if stored consent exists, apply it
+                    if (stored) {
+                        updateGtagConsentFromLocal();
+                        applyPosthogFromLocal();
+                    } else if (cb) {
+                        // cookiebot exists; keep using its events (already handled earlier)
+                        updateGtagConsentFromCookiebot();
+                        initPosthogIfAllowed();
+                    }
+                }
+            });
+        })();
     </script>
 </body>
 

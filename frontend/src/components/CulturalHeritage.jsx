@@ -9,7 +9,7 @@ const CulturalHeritage = () => {
       icon: FaHistory,
       title: 'Shri Sant Shaikh Mohmand Maharaj',
       description: 'Shri Sant Shaikh Mohmand Maharaj was a revered spiritual leader known for his deep wisdom, compassion, and guidance. Celebrated for his teachings on devotion, selflessness, and service to humanity, he inspired countless followers to lead a life of righteousness and inner peace. His life and works continue to be a beacon of spiritual enlightenment, drawing devotees from far and wide to seek blessings and spiritual knowledge.',
-      image: 'https://images.unsplash.com/photo-1601758123927-0f7d9f042cc7', // replace with actual image if available
+      image: '/asset/SHRI SANT SHAIKH MOHAMMAD MAHARAJ.jpeg',
       facts: [
         'Renowned spiritual leader',
         'Guided followers in devotion and selfless service',
@@ -21,7 +21,7 @@ const CulturalHeritage = () => {
       icon: FaHistory, // Suitable icon for fort/historical site
       title: 'Pedgaon Fort (Bahadurgad/Dharmaveergad)',
       description: 'Situated approximately 22 km south of Shrigonda, Pedgaon Fort stands as a testament to the region\'s strategic importance. The fort houses five temples, including the Lakshmi Narayan and Baleshwar temples, showcasing intricately carved pillars and historical remnants from bygone eras.',
-      image: 'https://images.openai.com/static-rsc-1/13c8e0d6-1e6f-4b8f-bd8d-8c8d2c8d8c8d.jpg',
+      image: '/asset/Dharmveer_ford.jpg',
       facts: [
         'Historical fort with 5 temples',
         'Intricate architecture and carvings',
@@ -33,7 +33,7 @@ const CulturalHeritage = () => {
       icon: FaLandmark,
       title: 'Hemadpanti Temples',
       description: 'Shrigonda is home to four Hemadpanti temples, showcasing the distinctive Hemadpanthi architectural style characterized by black stone construction without mortar. These 13th-century temples reflect the region\'s rich cultural and religious heritage.',
-      image: 'https://images.openai.com/static-rsc-1/13c8e0d6-1e6f-4b8f-bd8d-8c8d2c8d8c8d.jpg',
+      image: '/asset/SHRIGONDA MANDIR.jpeg',
       facts: [
         'Distinctive Hemadpanthi architecture',
         'Built using black stone without mortar',
@@ -52,7 +52,7 @@ const CulturalHeritage = () => {
           viewport={{ once: true }}
           className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            Cultural <span className="bg-gradient-to-r from-[#C9933E] to-[#E74C3C] bg-clip-text text-transparent">Heritage</span>
+            Cultural <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">Heritage</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Discover the rich cultural tapestry and historical significance of Shrigonda
@@ -111,7 +111,7 @@ const CulturalHeritage = () => {
                       transition={{ delay: 0.3 + idx * 0.1 }}
                       className="flex items-center space-x-3"
                     >
-                      <div className="w-2 h-2 bg-gradient-to-r from-[#C9933E] to-[#E74C3C] rounded-full"></div>
+                      <div className="w-2 h-2 bg-gradient-to-r from-red-500 to-red-700 rounded-full"></div>
                       <span className="text-gray-700 font-medium">{fact}</span>
                     </motion.div>
                   ))}
@@ -120,7 +120,7 @@ const CulturalHeritage = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="mt-6 px-8 py-3 bg-gradient-to-r from-[#C9933E] to-[#E74C3C] text-white rounded-full font-bold shadow-lg hover:shadow-xl transition-all"
+                  className="mt-6 px-8 py-3 bg-gradient-to-r from-red-500 to-red-700 text-white rounded-full font-bold shadow-lg hover:shadow-xl transition-all"
                 >
                   Learn More
                 </motion.button>

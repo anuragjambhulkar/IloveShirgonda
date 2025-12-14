@@ -26,12 +26,12 @@ const HeroSection = () => {
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Animated Background with Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#8B6F3B] via-[#C9933E] to-[#E74C3C]">
+      <div className="absolute inset-0 bg-gradient-to-br from-[#ff6b6b] via-[#e63946] to-[#b5171b]" >
         {/* Animated mesh gradient overlay */}
         <div
           className="absolute inset-0 opacity-30"
           style={{
-            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255,255,255,0.2) 0%, transparent 50%)`
+            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 0, 0, 0.2) 0%, transparent 50%)`
           }}
         />
 
@@ -85,7 +85,7 @@ const HeroSection = () => {
             <div className="relative">
               <div className="absolute inset-0 bg-white rounded-full blur-3xl opacity-40"></div>
               <img
-                src="/asset/logo_hero_section.png " // Directly reference the image from the public folder
+                src="/asset/logo-hero-section.png" // Directly reference the image from the public folder
                 alt="I Love Shrigonda Logo"
                 className="w-48 h-48 sm:w-64 sm:h-64 object-contain relative drop-shadow-2xl"
               />
@@ -182,7 +182,7 @@ const HeroSection = () => {
           <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white" />
         </svg>
       </div>
-    </section>
+    </section >
   );
 };
 

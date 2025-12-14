@@ -34,31 +34,31 @@ const NewsUpdates = () => {
   const mockNews = [
     {
       id: '1',
-      title: 'Annual Temple Festival Announced',
-      content: 'The grand annual temple festival will be celebrated next month with traditional rituals, cultural programs, and community feasts. Everyone is invited to participate in this auspicious occasion.',
-      image_url: 'https://images.unsplash.com/photo-1721924275114-2c4d3e8a0fde',
-      published_at: new Date().toISOString()
+      title: 'MP Nilesh Lanke Discusses Local Development',
+      content: 'MP Nilesh Lanke visited Shrigonda and addressed key issues, emphasizing the importance of youth opportunities and criticizing government inaction on farmer issues.',
+      image_url: '/asset/SHRIGONDA.jpeg',
+      published_at: new Date('2025-10-26').toISOString()
     },
     {
       id: '2',
-      title: 'New Community Center Opens',
-      content: 'A state-of-the-art community center has been inaugurated, providing modern facilities for meetings, workshops, and cultural events. The center will serve as a hub for village activities.',
-      image_url: 'https://images.unsplash.com/photo-1651678938586-affccc71c270',
-      published_at: new Date().toISOString()
+      title: 'Shrigonda Municipal Council Elections Gain Momentum',
+      content: 'With the upcoming Municipal Council elections, political activity is increasing in Shrigonda. Aspirants are preparing their campaigns, and reservation policies are expected to play a key role.',
+      image_url: '/asset/images (7).jpeg',
+      published_at: new Date('2025-10-25').toISOString()
     },
     {
       id: '3',
-      title: 'Farming Workshop Success',
-      content: 'The recent organic farming workshop attracted over 100 farmers from surrounding villages. Experts shared modern techniques while preserving traditional wisdom.',
-      image_url: 'https://images.unsplash.com/photo-1672603586237-343746cfb8fe',
-      published_at: new Date().toISOString()
+      title: 'Action Taken Against Illegal Sand Mining',
+      content: 'Tehsildar Milind Kulthe has taken a strong stance against illegal sand mining in the area, with recent actions leading to the destruction of equipment used for illegal activities.',
+      image_url: '/asset/Dharmveer Gad pedgoan 1.jpg',
+      published_at: new Date('2025-10-20').toISOString()
     },
     {
       id: '4',
-      title: 'Youth Sports Tournament',
-      content: 'Village youth showcased their talents in the inter-village sports tournament. The event promoted fitness and sportsmanship among young participants.',
-      image_url: 'https://images.unsplash.com/photo-1622354573449-ce732931783f',
-      published_at: new Date().toISOString()
+      title: 'Belwandi Vyapari Patsanstha Distributes Dividends',
+      content: 'The Belwandi Vyapari Patsanstha announced a 15% dividend for its members and honored meritorious individuals in a recent event, highlighting the cooperative\'s success.',
+      image_url: '/asset/SHRIGONDA MANDIR.jpeg',
+      published_at: new Date('2025-10-18').toISOString()
     }
   ];
 
@@ -72,7 +72,7 @@ const NewsUpdates = () => {
           viewport={{ once: true }}
           className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            News & <span className="bg-gradient-to-r from-[#C9933E] to-[#E74C3C] bg-clip-text text-transparent">Updates</span>
+            News & <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">Updates</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Stay informed with the latest happenings in our village

@@ -70,7 +70,7 @@ const ContactSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            Get In <span className="bg-gradient-to-r from-[#C9933E] to-[#E74C3C] bg-clip-text text-transparent">Touch</span>
+            Get In <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">Touch</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Have questions or want to connect? We'd love to hear from you!
@@ -154,7 +154,7 @@ const ContactSection = () => {
                 disabled={loading}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full py-4 bg-gradient-to-r from-[#C9933E] to-[#E74C3C] text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                className="w-full py-4 bg-gradient-to-r from-red-500 to-red-700 text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
               >
                 {loading ? (
                   <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-white"></div>
