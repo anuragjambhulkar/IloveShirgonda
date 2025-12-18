@@ -28,4 +28,4 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y lftp
-          lftp -e "debug 3; set ftp:ssl-allow no; mirror -R frontend/build /home/iloveshr/public_html; quit" -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com
+          lftp -e "debug 3; set ftp:ssl-allow no; set ftp:passive-mode on; set ftp:prefer-epsv no; mirror -R frontend/build /home/iloveshr/public_html; quit" -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com
