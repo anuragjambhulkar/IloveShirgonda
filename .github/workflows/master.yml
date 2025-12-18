@@ -24,15 +24,8 @@ jobs:
         run: npm run build
         working-directory: frontend
 
-      - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ftp.iloveshrigonda.com
-          username: iloveshr
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
-          port: 21
-          # The local directory where the build files are located
-          local-dir: ./frontend/build/
-          # The destination directory on the FTP server
-          server-dir: /home/iloveshr/public_html/
+      - name: 📂 Sync files via lftp
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp
+          lftp -e "debug 3; set ftp:ssl-allow no; mirror -R frontend/build /home/iloveshr/public_html; quit" -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com
