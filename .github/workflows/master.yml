@@ -21,71 +21,37 @@ jobs:
         with:
           node-version: 20
 
-      # 3️⃣ Install & Build (FIXED)
+      # 3️⃣ Install & Build
       - name: 📦 Install and Build
         run: |
           cd frontend
           npm install
           npm run build
 
-      # 4️⃣ Zip build
-      - name: 🗜️ Zip build
-        run: |
-          sudo apt-get install -y zip
-          cd frontend/build
-          zip -r ../../deploy.zip .
+      # 4️⃣ Install lftp
+      - name: 📦 Install lftp
+        run: sudo apt-get install -y lftp
 
-      # 5️⃣ Create unzip script
-      - name: 📝 Create unzip script
+      # 5️⃣ Upload build via FTP (SAFE MODE)
+      - name: 🚀 Upload build to server
         run: |
-          cat <<'EOF' > deploy_unzip.php
-          <?php
-          $zip = new ZipArchive;
-          if ($zip->open('deploy.zip') === TRUE) {
-              $zip->extractTo(__DIR__);
-              $zip->close();
-              echo 'OK';
-          } else {
-              http_response_code(500);
-              echo 'FAIL';
-          }
-          ?>
-          EOF
-
-      # 6️⃣ Upload via FTP (NO HANG)
-      - name: 📂 Upload via FTP
-        run: |
-          sudo apt-get install -y lftp
           lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
           set ftp:ssl-allow no
           set ftp:passive-mode on
           set ftp:prefer-epsv no
           set ftp:use-feat no
-          set net:timeout 20
-          set net:max-retries 3
-          set net:reconnect-interval-base 2
-          cd public_html
-          put deploy.zip
-          put deploy_unzip.php
-          quit
-          EOF
+          set net:timeout 15
+          set net:max-retries 2
+          set net:reconnect-interval-base 3
 
-      # 7️⃣ Extract
-      - name: 🚀 Extract on server
-        run: |
-          curl --fail --max-time 60 https://iloveshrigonda.com/deploy_unzip.php
+          # IMPORTANT: stay in restricted directory
+          cd .
 
-      # 8️⃣ Cleanup
-      - name: 🧹 Cleanup
-        run: |
-          lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
-          set ftp:ssl-allow no
-          set ftp:passive-mode on
-          set ftp:prefer-epsv no
-          set net:timeout 20
-          set net:max-retries 3
-          cd public_html
-          rm deploy.zip
-          rm deploy_unzip.php
+          # clean old files
+          rm -r *
+
+          # upload build folder CONTENTS
+          mirror -R frontend/build .
+
           quit
           EOF
