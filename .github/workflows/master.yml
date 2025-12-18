@@ -11,47 +11,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout
-      - name: 🚚 Checkout code
+      # 1️⃣ Checkout code
+      - name: 🚚 Checkout
         uses: actions/checkout@v4
 
-      # 2️⃣ Setup Node
+      # 2️⃣ Setup Node.js
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # 3️⃣ Install & Build
-      - name: 📦 Install and Build
+      # 3️⃣ Install & Build frontend
+      - name: 📦 Install & Build
         run: |
           cd frontend
           npm install
           npm run build
 
-      # 4️⃣ Install lftp
-      - name: 📦 Install lftp
-        run: sudo apt-get install -y lftp
-
-      # 5️⃣ Upload build via FTP (SAFE MODE)
-      - name: 🚀 Upload build to server
-        run: |
-          lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
-          set ftp:ssl-allow no
-          set ftp:passive-mode on
-          set ftp:prefer-epsv no
-          set ftp:use-feat no
-          set net:timeout 15
-          set net:max-retries 2
-          set net:reconnect-interval-base 3
-
-          # IMPORTANT: stay in restricted directory
-          cd .
-
-          # clean old files
-          rm -r *
-
-          # upload build folder CONTENTS
-          mirror -R frontend/build .
-
-          quit
-          EOF
+      # 4️⃣ FTP Deploy (NO ZIP, NO HANG)
+      - name: 📂 Deploy via FTP
+        uses: samkirkland/ftp-deploy-action@4.3.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: frontend/build/
+          server-dir: /public_html/
+          protocol: ftp
+          dangerous-clean-slate: true
