@@ -11,27 +11,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout
       - name: 🚚 Checkout code
         uses: actions/checkout@v4
 
+      # 2️⃣ Setup Node
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: 📦 Install & Build Frontend
+      # 3️⃣ Install & Build (FIXED)
+      - name: 📦 Install and Build
         run: |
           cd frontend
           npm install
           npm run build
 
-      - name: 🗜️ Zip Build
+      # 4️⃣ Zip build
+      - name: 🗜️ Zip build
         run: |
-          sudo apt-get install -y zip lftp
+          sudo apt-get install -y zip
           cd frontend/build
           zip -r ../../deploy.zip .
 
-      - name: 📝 Create unzip PHP
+      # 5️⃣ Create unzip script
+      - name: 📝 Create unzip script
         run: |
           cat <<'EOF' > deploy_unzip.php
           <?php
@@ -47,26 +52,35 @@ jobs:
           ?>
           EOF
 
+      # 6️⃣ Upload via FTP (NO HANG)
       - name: 📂 Upload via FTP
         run: |
+          sudo apt-get install -y lftp
           lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
           set ftp:ssl-allow no
           set ftp:passive-mode on
+          set net:timeout 20
+          set net:max-retries 2
+          set net:reconnect-interval-base 5
           cd /home/iloveshr/public_html
           put deploy.zip
           put deploy_unzip.php
           quit
           EOF
 
+      # 7️⃣ Extract
       - name: 🚀 Extract on server
         run: |
-          curl --fail https://iloveshrigonda.com/deploy_unzip.php
+          curl --fail --max-time 60 https://iloveshrigonda.com/deploy_unzip.php
 
+      # 8️⃣ Cleanup
       - name: 🧹 Cleanup
         run: |
           lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
           set ftp:ssl-allow no
           set ftp:passive-mode on
+          set net:timeout 20
+          set net:max-retries 2
           cd /home/iloveshr/public_html
           rm deploy.zip
           rm deploy_unzip.php
