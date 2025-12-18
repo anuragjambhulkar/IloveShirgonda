@@ -16,16 +16,41 @@ jobs:
         with:
           node-version: 20
 
-      - name: 📦 Install dependencies
-        run: npm ci
-        working-directory: frontend
+      - name: 📦 Install and Build
+        run: |
+          cd frontend
+          npm ci
+          npm run build
 
-      - name: 🏗️ Build Project
-        run: npm run build
-        working-directory: frontend
-
-      - name: 📂 Sync files via lftp
+      - name: 🗜️ Compress Build
         run: |
           sudo apt-get update
+          sudo apt-get install -y zip
+          cd frontend/build
+          zip -r ../../deploy.zip .
+
+      - name: 📝 Create Unzip Script
+        run: |
+          echo "<?php
+          \$zip = new ZipArchive;
+          if (\$zip->open('deploy.zip') === TRUE) {
+              \$zip->extractTo('./');
+              \$zip->close();
+              echo 'Extraction successful';
+          } else {
+              echo 'Extraction failed';
+              http_response_code(500);
+          }
+          ?>" > deploy_unzip.php
+
+      - name: 📂 Upload Archives via lftp
+        run: |
           sudo apt-get install -y lftp
-          lftp -e "debug 3; set ftp:ssl-allow no; set ftp:passive-mode on; set ftp:prefer-epsv no; mirror -R frontend/build /home/iloveshr/public_html; quit" -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com
+          lftp -e "debug 3; set ftp:ssl-allow no; set ftp:passive-mode on; cd /home/iloveshr/public_html; put deploy.zip; put -O . deploy_unzip.php; quit" -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com
+
+      - name: 🚀 Trigger Extraction
+        run: curl --fail --max-time 300 https://iloveshrigonda.com/deploy_unzip.php
+
+      - name: 🧹 Cleanup
+        run: |
+          lftp -e "debug 3; set ftp:ssl-allow no; set ftp:passive-mode on; cd /home/iloveshr/public_html; rm deploy.zip; rm deploy_unzip.php; quit" -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com
