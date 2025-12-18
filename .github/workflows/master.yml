@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout source code
+      # 1️⃣ Checkout code
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
 
@@ -20,20 +20,20 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
-      # 3️⃣ Install & Build frontend
+      # 3️⃣ Install & build frontend
       - name: 📦 Install and Build
         run: |
           cd frontend
           npm ci
           npm run build
 
-      # 4️⃣ Zip build output
+      # 4️⃣ Zip build output (zip is preinstalled on runners)
       - name: 🗜️ Compress Build
         run: |
-          sudo apt-get install -y zip
           cd frontend/build
-          zip -r ../../deploy.zip .
+          zip -qr ../../deploy.zip .
 
       # 5️⃣ Create PHP unzip script
       - name: 📝 Create Unzip Script
@@ -41,42 +41,42 @@ jobs:
           cat <<'EOF' > deploy_unzip.php
           <?php
           $zip = new ZipArchive;
-          if ($zip->open('deploy.zip') === TRUE) {
+          if ($zip->open(__DIR__ . '/deploy.zip') === TRUE) {
               $zip->extractTo(__DIR__);
               $zip->close();
-              echo 'Extraction successful';
+              echo 'OK';
           } else {
               http_response_code(500);
-              echo 'Extraction failed';
+              echo 'FAIL';
           }
           ?>
           EOF
 
-      # 6️⃣ Upload via FTP (Pure-FTPd safe)
-      - name: 📂 Upload files via FTP
+      # 6️⃣ Upload via FTP (FAST & SAFE)
+      - name: 📂 Upload via FTP
         run: |
-          sudo apt-get install -y lftp
+          sudo apt-get install -y lftp > /dev/null
           lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
           set ftp:ssl-allow no
           set ftp:passive-mode on
-          cd /home/iloveshr/public_html
+          cd public_html
           put deploy.zip
           put deploy_unzip.php
           quit
           EOF
 
-      # 7️⃣ Trigger extraction
-      - name: 🚀 Extract on Server
+      # 7️⃣ Extract on server
+      - name: 🚀 Extract
         run: |
-          curl --fail --max-time 300 https://iloveshrigonda.com/deploy_unzip.php
+          curl --silent --fail https://iloveshrigonda.com/deploy_unzip.php
 
       # 8️⃣ Cleanup
-      - name: 🧹 Cleanup server files
+      - name: 🧹 Cleanup
         run: |
           lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
           set ftp:ssl-allow no
           set ftp:passive-mode on
-          cd /home/iloveshr/public_html
+          cd public_html
           rm deploy.zip
           rm deploy_unzip.php
           quit
