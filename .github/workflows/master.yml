@@ -17,11 +17,11 @@ jobs:
           node-version: 20
 
       - name: 📦 Install dependencies
-        run: yarn install
+        run: npm ci
         working-directory: frontend
 
       - name: 🏗️ Build Project
-        run: yarn build
+        run: npm run build
         working-directory: frontend
 
       - name: 📂 Sync files
@@ -30,7 +30,7 @@ jobs:
           server: ftp.iloveshrigonda.com
           username: iloveshr
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
+          protocol: ftp
           port: 21
           # The local directory where the build files are located
           local-dir: ./frontend/build/
