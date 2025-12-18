@@ -59,10 +59,10 @@ jobs:
           lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
           set ftp:ssl-allow no
           set ftp:passive-mode on
-          set net:timeout 20
-          set net:max-retries 2
+          set net:timeout 60
+          set net:max-retries 10
           set net:reconnect-interval-base 5
-          cd /home/iloveshr/public_html
+          cd public_html
           put deploy.zip
           put deploy_unzip.php
           quit
@@ -71,7 +71,7 @@ jobs:
       # 7️⃣ Extract
       - name: 🚀 Extract on server
         run: |
-          curl --fail --max-time 60 https://iloveshrigonda.com/deploy_unzip.php
+          curl --fail --max-time 120 https://iloveshrigonda.com/deploy_unzip.php
 
       # 8️⃣ Cleanup
       - name: 🧹 Cleanup
@@ -79,9 +79,9 @@ jobs:
           lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
           set ftp:ssl-allow no
           set ftp:passive-mode on
-          set net:timeout 20
-          set net:max-retries 2
-          cd /home/iloveshr/public_html
+          set net:timeout 60
+          set net:max-retries 10
+          cd public_html
           rm deploy.zip
           rm deploy_unzip.php
           quit
