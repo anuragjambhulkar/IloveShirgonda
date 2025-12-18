@@ -60,9 +60,10 @@ jobs:
           set ftp:ssl-allow no
           set ftp:passive-mode on
           set ftp:prefer-epsv no
-          set net:timeout 60
-          set net:max-retries 10
-          set net:reconnect-interval-base 5
+          set ftp:use-feat no
+          set net:timeout 20
+          set net:max-retries 3
+          set net:reconnect-interval-base 2
           cd public_html
           put deploy.zip
           put deploy_unzip.php
@@ -72,7 +73,7 @@ jobs:
       # 7️⃣ Extract
       - name: 🚀 Extract on server
         run: |
-          curl --fail --max-time 120 https://iloveshrigonda.com/deploy_unzip.php
+          curl --fail --max-time 60 https://iloveshrigonda.com/deploy_unzip.php
 
       # 8️⃣ Cleanup
       - name: 🧹 Cleanup
@@ -81,8 +82,8 @@ jobs:
           set ftp:ssl-allow no
           set ftp:passive-mode on
           set ftp:prefer-epsv no
-          set net:timeout 60
-          set net:max-retries 10
+          set net:timeout 20
+          set net:max-retries 3
           cd public_html
           rm deploy.zip
           rm deploy_unzip.php
