@@ -22,12 +22,12 @@ jobs:
           node-version: 20
           cache: npm
 
-      # 3️⃣ Install & build frontend
       - name: 📦 Install and Build
         run: |
           cd frontend
-          npm ci
+          npm install
           npm run build
+
 
       # 4️⃣ Zip build output (zip is preinstalled on runners)
       - name: 🗜️ Compress Build
