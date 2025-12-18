@@ -59,6 +59,7 @@ jobs:
           lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
           set ftp:ssl-allow no
           set ftp:passive-mode on
+          set ftp:prefer-epsv no
           set net:timeout 60
           set net:max-retries 10
           set net:reconnect-interval-base 5
@@ -79,6 +80,7 @@ jobs:
           lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
           set ftp:ssl-allow no
           set ftp:passive-mode on
+          set ftp:prefer-epsv no
           set net:timeout 60
           set net:max-retries 10
           cd public_html
