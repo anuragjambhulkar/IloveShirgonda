@@ -28,16 +28,22 @@ jobs:
           npm install
           npm run build
 
-      # 4️⃣ FTP Deploy (Extension)
+      # 4️⃣ FTP Deploy (Manual LFTP - The only way to fix "None of available transfer modes")
       - name: 📂 Deploy via FTP
-        uses: samkirkland/ftp-deploy-action@4.3.0
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          # Use relative path to avoid chroot issues
-          server-dir: public_html/
-          local-dir: frontend/build/
-          protocol: ftp
-          port: 21
-          dangerous-clean-slate: true
+        run: |
+          sudo apt-get install -y lftp
+          lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
+          # Fix for "None of the available transfer modes work":
+          set ftp:ssl-allow no
+          set ftp:passive-mode on
+          set ftp:prefer-epsv no
+          
+          # Optimizations
+          set net:timeout 30
+          set net:max-retries 3
+          
+          # Sync files (Mirror)
+          cd public_html
+          mirror -R --delete --parallel=5 --verbose frontend/build .
+          quit
+          EOF
