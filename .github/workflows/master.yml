@@ -25,29 +25,62 @@ jobs:
           npm install
           npm run build
 
-      - name: � Deploy via FTP (FTPS + lftp)
+      - name: 🗜️ Zip Build
+        run: |
+          sudo apt-get install -y zip
+          cd frontend/build
+          zip -qr ../../deploy.zip .
+
+      - name: 📝 Create Unzip Script
+        run: |
+          cat <<'EOF' > deploy_unzip.php
+          <?php
+          $zip = new ZipArchive;
+          if ($zip->open('deploy.zip') === TRUE) {
+              $zip->extractTo(__DIR__);
+              $zip->close();
+              echo 'OK';
+          } else {
+              http_response_code(500);
+              echo 'FAIL';
+          }
+          ?>
+          EOF
+
+      - name: 📂 Upload via FTP (Plain + No EPSV)
         run: |
           sudo apt-get install -y lftp
-          # Using lftp with SSL ENABLED (fixed for timeout)
+          # Using Plain FTP (No SSL) to bypass certificate/handshake issues on shared hosting
           lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
-          # 1. Enable SSL/TLS (Fixes data connection on many hosts)
-          set ftp:ssl-allow yes
-          set ftp:ssl-force yes
-          set ftp:ssl-protect-data yes
-          
-          # 2. Disable Certificate Verification (Fixes 'common name doesn't match')
-          set ssl:verify-certificate no
-          
-          # 3. Disable EPSV (Compatibility fix)
-          set ftp:prefer-epsv no
-          
-          # 3. Connection settings
-          set net:timeout 30
-          set net:max-retries 3
+          set ftp:ssl-allow no
           set ftp:passive-mode on
+          set ftp:prefer-epsv no
+          set net:timeout 30
+          set net:max-retries 5
+          set net:reconnect-interval-base 2
           
-          # 4. Sync
+          # Navigate and Upload
           cd public_html
-          mirror -R --delete --parallel=5 --verbose frontend/build .
+          put deploy.zip
+          put deploy_unzip.php
+          quit
+          EOF
+
+      - name: 🚀 Extract on Server
+        run: |
+          # Wait a moment for FS sync
+          sleep 2
+          curl --fail --max-time 120 https://iloveshrigonda.com/deploy_unzip.php
+
+      - name: 🧹 Cleanup
+        continue-on-error: true
+        run: |
+          lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
+          set ftp:ssl-allow no
+          set ftp:passive-mode on
+          set ftp:prefer-epsv no
+          cd public_html
+          rm deploy.zip
+          rm deploy_unzip.php
           quit
           EOF
