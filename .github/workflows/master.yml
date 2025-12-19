@@ -11,81 +11,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout
-      - name: 🚚 Checkout code
+      # 1️⃣ Checkout code
+      - name: 🚚 Checkout
         uses: actions/checkout@v4
 
-      # 2️⃣ Setup Node
+      # 2️⃣ Setup Node.js
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # 3️⃣ Install & Build (FIXED)
-      - name: 📦 Install and Build
+      # 3️⃣ Install & Build frontend
+      - name: 📦 Install & Build
         run: |
           cd frontend
           npm install
           npm run build
 
-      # 4️⃣ Zip build
-      - name: 🗜️ Zip build
-        run: |
-          sudo apt-get install -y zip
-          cd frontend/build
-          zip -r ../../deploy.zip .
-
-      # 5️⃣ Create unzip script
-      - name: 📝 Create unzip script
-        run: |
-          cat <<'EOF' > deploy_unzip.php
-          <?php
-          $zip = new ZipArchive;
-          if ($zip->open('deploy.zip') === TRUE) {
-              $zip->extractTo(__DIR__);
-              $zip->close();
-              echo 'OK';
-          } else {
-              http_response_code(500);
-              echo 'FAIL';
-          }
-          ?>
-          EOF
-
-      # 6️⃣ Upload via FTP (NO HANG)
-      - name: 📂 Upload via FTP
-        run: |
-          sudo apt-get install -y lftp
-          lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
-          set ftp:ssl-allow no
-          set ftp:passive-mode on
-          set ftp:prefer-epsv no
-          set ftp:use-feat no
-          set net:timeout 20
-          set net:max-retries 3
-          set net:reconnect-interval-base 2
-          cd public_html
-          put deploy.zip
-          put deploy_unzip.php
-          quit
-          EOF
-
-      # 7️⃣ Extract
-      - name: 🚀 Extract on server
-        run: |
-          curl --fail --max-time 60 https://iloveshrigonda.com/deploy_unzip.php
-
-      # 8️⃣ Cleanup
-      - name: 🧹 Cleanup
-        run: |
-          lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
-          set ftp:ssl-allow no
-          set ftp:passive-mode on
-          set ftp:prefer-epsv no
-          set net:timeout 20
-          set net:max-retries 3
-          cd public_html
-          rm deploy.zip
-          rm deploy_unzip.php
-          quit
-          EOF
+      # 4️⃣ FTP Deploy (NO ZIP, NO HANG)
+      - name: 📂 Deploy via FTP
+        uses: samkirkland/ftp-deploy-action@4.3.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: frontend/build/
+          server-dir: /public_html/
+          protocol: ftp
+          dangerous-clean-slate: true
