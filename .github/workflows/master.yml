@@ -28,14 +28,27 @@ jobs:
           npm install
           npm run build
 
-      # 4️⃣ FTP Deploy (NO ZIP, NO HANG)
+      # 4️⃣ FTP Deploy (Manual LFTP - No Zip, No Hang)
       - name: 📂 Deploy via FTP
-        uses: samkirkland/ftp-deploy-action@4.3.0
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: frontend/build/
-          server-dir: /public_html/
-          protocol: ftp
-          dangerous-clean-slate: true
+        run: |
+          sudo apt-get install -y lftp
+          lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
+          # 1. Disable SSL for compatibility
+          set ftp:ssl-allow no
+          
+          # 2. Force Passive Mode but DISABLE EPSV (Critical Fix)
+          set ftp:passive-mode on
+          set ftp:prefer-epsv no
+          
+          # 3. Optimize for speed (No feature check, low timeout)
+          set ftp:use-feat no
+          set net:timeout 20
+          set net:max-retries 3
+          
+          # 4. Sync files (Mirror local build to remote public_html)
+          # -R = Reverse mirror (upload)
+          # --delete = Remove old files on server
+          # --parallel=10 = Upload 10 files at once for speed
+          mirror -R --delete --parallel=10 --verbose frontend/build public_html
+          quit
+          EOF
