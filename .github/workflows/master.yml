@@ -35,7 +35,10 @@ jobs:
           set ftp:ssl-force yes
           set ftp:ssl-protect-data yes
           
-          # 2. Disable EPSV (Compatibility fix)
+          # 2. Disable Certificate Verification (Fixes 'common name doesn't match')
+          set ssl:verify-certificate no
+          
+          # 3. Disable EPSV (Compatibility fix)
           set ftp:prefer-epsv no
           
           # 3. Connection settings
