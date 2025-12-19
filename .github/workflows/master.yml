@@ -11,39 +11,58 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout code
       - name: 🚚 Checkout
         uses: actions/checkout@v4
 
-      # 2️⃣ Setup Node.js
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # 3️⃣ Install & Build frontend
       - name: 📦 Install & Build
         run: |
           cd frontend
           npm install
           npm run build
 
-      # 4️⃣ FTP Deploy (Manual LFTP - The only way to fix "None of available transfer modes")
-      - name: 📂 Deploy via FTP
+      - name: 🗜️ Zip Build
         run: |
-          sudo apt-get install -y lftp
-          lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
-          # Fix for "None of the available transfer modes work":
-          set ftp:ssl-allow no
-          set ftp:passive-mode on
-          set ftp:prefer-epsv no
-          
-          # Optimizations
-          set net:timeout 30
-          set net:max-retries 3
-          
-          # Sync files (Mirror)
-          cd public_html
-          mirror -R --delete --parallel=5 --verbose frontend/build .
-          quit
+          sudo apt-get install -y zip
+          cd frontend/build
+          zip -qr ../../deploy.zip .
+
+      - name: 📝 Create Unzip Script
+        run: |
+          cat <<'EOF' > deploy_unzip.php
+          <?php
+          $zip = new ZipArchive;
+          if ($zip->open('deploy.zip') === TRUE) {
+              $zip->extractTo(__DIR__);
+              $zip->close();
+              echo 'OK';
+          } else {
+              http_response_code(500);
+              echo 'FAIL';
+          }
+          ?>
           EOF
+
+      - name: 📂 Upload via Curl (Fast & Robust)
+        run: |
+          # Upload Zip
+          curl -v --ftp-pasv --disable-epsv --upload-file deploy.zip --user "iloveshr:${{ secrets.FTP_PASSWORD }}" ftp://ftp.iloveshrigonda.com/public_html/
+          
+          # Upload Script
+          curl -v --ftp-pasv --disable-epsv --upload-file deploy_unzip.php --user "iloveshr:${{ secrets.FTP_PASSWORD }}" ftp://ftp.iloveshrigonda.com/public_html/
+
+      - name: 🚀 Extract on Server
+        run: |
+          # Trigger the PHP script to unzip files
+          curl --fail --max-time 120 https://iloveshrigonda.com/deploy_unzip.php
+
+      - name: 🧹 Cleanup
+        continue-on-error: true
+        run: |
+          # Delete temporary files using Curl commands
+          curl -v --ftp-pasv --disable-epsv -Q "DELE public_html/deploy.zip" --user "iloveshr:${{ secrets.FTP_PASSWORD }}" ftp://ftp.iloveshrigonda.com/
+          curl -v --ftp-pasv --disable-epsv -Q "DELE public_html/deploy_unzip.php" --user "iloveshr:${{ secrets.FTP_PASSWORD }}" ftp://ftp.iloveshrigonda.com/
