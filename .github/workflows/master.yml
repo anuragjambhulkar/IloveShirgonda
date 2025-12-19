@@ -25,44 +25,26 @@ jobs:
           npm install
           npm run build
 
-      - name: 🗜️ Zip Build
+      - name: � Deploy via FTP (FTPS + lftp)
         run: |
-          sudo apt-get install -y zip
-          cd frontend/build
-          zip -qr ../../deploy.zip .
-
-      - name: 📝 Create Unzip Script
-        run: |
-          cat <<'EOF' > deploy_unzip.php
-          <?php
-          $zip = new ZipArchive;
-          if ($zip->open('deploy.zip') === TRUE) {
-              $zip->extractTo(__DIR__);
-              $zip->close();
-              echo 'OK';
-          } else {
-              http_response_code(500);
-              echo 'FAIL';
-          }
-          ?>
-          EOF
-
-      - name: 📂 Upload via Curl (Fast & Robust)
-        run: |
-          # Upload Zip
-          curl -v --ftp-pasv --disable-epsv --upload-file deploy.zip --user "iloveshr:${{ secrets.FTP_PASSWORD }}" ftp://ftp.iloveshrigonda.com/public_html/
+          sudo apt-get install -y lftp
+          # Using lftp with SSL ENABLED (fixed for timeout)
+          lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
+          # 1. Enable SSL/TLS (Fixes data connection on many hosts)
+          set ftp:ssl-allow yes
+          set ftp:ssl-force yes
+          set ftp:ssl-protect-data yes
           
-          # Upload Script
-          curl -v --ftp-pasv --disable-epsv --upload-file deploy_unzip.php --user "iloveshr:${{ secrets.FTP_PASSWORD }}" ftp://ftp.iloveshrigonda.com/public_html/
-
-      - name: 🚀 Extract on Server
-        run: |
-          # Trigger the PHP script to unzip files
-          curl --fail --max-time 120 https://iloveshrigonda.com/deploy_unzip.php
-
-      - name: 🧹 Cleanup
-        continue-on-error: true
-        run: |
-          # Delete temporary files using Curl commands
-          curl -v --ftp-pasv --disable-epsv -Q "DELE public_html/deploy.zip" --user "iloveshr:${{ secrets.FTP_PASSWORD }}" ftp://ftp.iloveshrigonda.com/
-          curl -v --ftp-pasv --disable-epsv -Q "DELE public_html/deploy_unzip.php" --user "iloveshr:${{ secrets.FTP_PASSWORD }}" ftp://ftp.iloveshrigonda.com/
+          # 2. Disable EPSV (Compatibility fix)
+          set ftp:prefer-epsv no
+          
+          # 3. Connection settings
+          set net:timeout 30
+          set net:max-retries 3
+          set ftp:passive-mode on
+          
+          # 4. Sync
+          cd public_html
+          mirror -R --delete --parallel=5 --verbose frontend/build .
+          quit
+          EOF
