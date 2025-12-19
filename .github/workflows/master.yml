@@ -25,62 +25,26 @@ jobs:
           npm install
           npm run build
 
-      - name: 🗜️ Zip Build
-        run: |
-          sudo apt-get install -y zip
-          cd frontend/build
-          zip -qr ../../deploy.zip .
-
-      - name: 📝 Create Unzip Script
-        run: |
-          cat <<'EOF' > deploy_unzip.php
-          <?php
-          $zip = new ZipArchive;
-          if ($zip->open('deploy.zip') === TRUE) {
-              $zip->extractTo(__DIR__);
-              $zip->close();
-              echo 'OK';
-          } else {
-              http_response_code(500);
-              echo 'FAIL';
-          }
-          ?>
-          EOF
-
-      - name: 📂 Upload via FTP (Plain + No EPSV)
+      - name: � Deploy via FTP (Direct Mirror)
         run: |
           sudo apt-get install -y lftp
-          # Using Plain FTP (No SSL) to bypass certificate/handshake issues on shared hosting
+          # Using Plain FTP (No SSL) + No EPSV to match local CoreFTP settings
           lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
+          # 1. Plain FTP (Matches your local config)
           set ftp:ssl-allow no
+          
+          # 2. Connection Mode
           set ftp:passive-mode on
           set ftp:prefer-epsv no
-          set net:timeout 30
-          set net:max-retries 5
+          set ftp:use-feat no
+          
+          # 3. Timeouts (Fast fail)
+          set net:timeout 20
+          set net:max-retries 3
           set net:reconnect-interval-base 2
           
-          # Navigate and Upload
+          # 4. Sync
           cd public_html
-          put deploy.zip
-          put deploy_unzip.php
-          quit
-          EOF
-
-      - name: 🚀 Extract on Server
-        run: |
-          # Wait a moment for FS sync
-          sleep 2
-          curl --fail --max-time 120 https://iloveshrigonda.com/deploy_unzip.php
-
-      - name: 🧹 Cleanup
-        continue-on-error: true
-        run: |
-          lftp -u iloveshr,${{ secrets.FTP_PASSWORD }} ftp.iloveshrigonda.com <<EOF
-          set ftp:ssl-allow no
-          set ftp:passive-mode on
-          set ftp:prefer-epsv no
-          cd public_html
-          rm deploy.zip
-          rm deploy_unzip.php
+          mirror -R --delete --parallel=5 --verbose frontend/build .
           quit
           EOF
