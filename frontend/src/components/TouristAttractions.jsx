@@ -1,46 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaLandmark, FaVihara, FaWater, FaGopuram } from 'react-icons/fa';
+import { data } from '../data';
 
 const TouristAttractions = () => {
-  const attractions = [
-    {
-      id: 1,
-      name: 'Pedgaon Fort (Bahadurgad)',
-      category: 'Historic',
-      icon: FaLandmark,
-      description: 'A historic fort also known as Bahadurgad, with five temples. It is a significant architectural and historical site in Shrigonda.',
-      image: '/asset/Dharmveer_ford.jpg',
-      highlights: ['History', 'Architecture', 'Temples']
-    },
-    {
-      id: 2,
-      name: 'Shri Sant Shaikh Mohammad Maharaj Temple',
-      category: 'Religious',
-      icon: FaVihara,
-      description: 'A revered shrine dedicated to Sant Shaikh Mohammad Maharaj, a prominent saint of the Warkari tradition. A place of spiritual significance.',
-      image: '/asset/SHRI SANT SHAIKH MOHAMMAD MAHARAJ.jpeg',
-      highlights: ['Spirituality', 'History', 'Pilgrimage']
-    },
-    {
-      id: 3,
-      name: 'Pazhar Lake',
-      category: 'Nature',
-      icon: FaWater,
-      description: 'A beautiful lake, also known as Pazhar Talav, offering scenic views and a peaceful environment. It is a popular spot for relaxation and picnics.',
-      image: 'https://images.unsplash.com/photo-1507525428034-b723a9ce6899',
-      highlights: ['Scenic Views', 'Relaxation', 'Picnics']
-    },
-    {
-      id: 4,
-      name: 'Siddheshwar Temple, Mandavgan',
-      category: 'Religious',
-      icon: FaGopuram,
-      description: 'An ancient temple at the confluence of the Kataksh and Vataksh rivers, with a tomb of Mandav Rishi and structures built by Ahilyabai Holkar.',
-      image: '/asset/SHRIGONDA MANDIR.jpeg',
-      highlights: ['Ancient Temple', 'River Confluence', 'Architecture']
-    }
-  ];
+  const t = data.attractions;
+
+  // Icons mapping for the items
+  const iconMap = [FaLandmark, FaVihara, FaWater, FaGopuram];
+
+  const attractions = t.items.map((item, index) => ({
+    ...item,
+    icon: iconMap[index] || FaLandmark
+  }));
 
   return (
     <section id="attractions" className="py-20 bg-gradient-to-b from-amber-50 to-white">
@@ -52,10 +24,10 @@ const TouristAttractions = () => {
           viewport={{ once: true }}
           className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            Tourist <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">Attractions</span>
+            {t.title} <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">{t.subtitle}</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Explore the must-visit places and hidden gems of Shrigonda
+            {t.description}
           </p>
         </motion.div>
 
@@ -81,7 +53,7 @@ const TouristAttractions = () => {
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                
+
                 {/* Icon */}
                 <div className="absolute top-4 right-4">
                   <div className="bg-white/90 backdrop-blur-sm p-3 rounded-xl">
@@ -123,7 +95,7 @@ const TouristAttractions = () => {
                   whileTap={{ scale: 0.95 }}
                   className="mt-4 w-full py-3 bg-gradient-to-r from-red-500 to-red-700 text-white rounded-xl font-bold hover:shadow-lg transition-all"
                 >
-                  Visit Now
+                  {t.button}
                 </motion.button>
               </div>
             </motion.div>

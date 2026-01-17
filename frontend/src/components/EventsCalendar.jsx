@@ -2,85 +2,36 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaCalendarAlt, FaMapMarkerAlt, FaClock } from 'react-icons/fa';
 import axios from 'axios';
+import { data } from '../data';
 import { format } from 'date-fns';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 const EventsCalendar = () => {
+  const t = data.events;
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchEvents();
-  }, []);
-
-  const fetchEvents = async () => {
-    try {
-      const response = await axios.get(`${API}/events`);
-      if (response.data.length > 0) {
-        setEvents(response.data);
-      } else {
-        setEvents(mockEvents);
+    const fetchEvents = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`${API}/events`);
+        if (response.data && response.data.length > 0) {
+          setEvents(response.data);
+        } else {
+          setEvents(t.items);
+        }
+      } catch (error) {
+        console.error('Error fetching events:', error);
+        setEvents(t.items);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error('Error fetching events:', error);
-      setEvents(mockEvents);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const mockEvents = [
-    {
-      id: '1',
-      title: 'Weekly Market (Athawadi Bazar)',
-      description: 'The vibrant weekly market where farmers and traders sell fresh produce, groceries, and household items. A central event for the local community.',
-      event_date: '2025-11-02', // Assuming it happens on a Sunday
-      location: 'Main Market Square, Shrigonda',
-      image_url: '/asset/SHRIGONDA.jpeg'
-    },
-    {
-      id: '2',
-      title: 'Shaikh Mohammad Maharaj Yatra',
-      description: 'The annual yatra (pilgrimage) to honor Shri Sant Shaikh Mohammad Maharaj. The event includes a palanquin procession, kirtans, and a large fair.',
-      event_date: '2025-11-15', // Placeholder date
-      location: 'Shri Sant Shaikh Mohammad Maharaj Temple, Shrigonda',
-      image_url: '/asset/SHRI SANT SHAIKH MOHAMMAD MAHARAJ.jpeg'
-    },
-    {
-      id: '3',
-      title: 'Diwali Pahat',
-      description: 'A special morning celebration on the first day of Diwali, with music, cultural programs, and community gatherings to welcome the festival of lights.',
-      event_date: '2025-10-31', // Diwali date
-      location: 'Shrigonda Town Center',
-      image_url: '/asset/images (7).jpeg'
-    },
-    {
-      id: '4',
-      title: 'Pedgaon Fort Heritage Walk',
-      description: 'A guided tour of the historic Pedgaon Fort (Bahadurgad), exploring its temples, architecture, and strategic importance in Maratha history.',
-      event_date: '2025-11-22',
-      location: 'Pedgaon Fort, Shrigonda',
-      image_url: '/asset/Dharmveer_ford.jpg'
-    },
-    {
-      id: '5',
-      title: 'Krishi Pradarshan (Agricultural Exhibition)',
-      description: 'An exhibition for farmers showcasing the latest agricultural technology, seeds, and fertilizers. Includes workshops and demonstrations.',
-      event_date: '2025-12-05',
-      location: 'Krishi Utpanna Bazar Samiti, Shrigonda',
-      image_url: '/asset/Dharmveer Gad pedgoan 1.jpg' // Using a generic nature image
-    },
-    {
-      id: '6',
-      title: 'Siddheshwar Temple Festival',
-      description: 'The annual festival at the ancient Siddheshwar Temple in Mandavgan, featuring religious ceremonies and a local fair.',
-      event_date: '2025-12-12',
-      location: 'Siddheshwar Temple, Mandavgan',
-      image_url: '/asset/SHRIGONDA MANDIR.jpeg'
-    }
-  ];
+    };
+    fetchEvents();
+  }, [t.items]);
 
   return (
     <section id="events" className="py-20 bg-gradient-to-b from-amber-50 to-white">
@@ -92,10 +43,10 @@ const EventsCalendar = () => {
           viewport={{ once: true }}
           className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            Events <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">Calendar</span>
+            {t.title} <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">{t.subtitle}</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Upcoming festivals, cultural events, and community gatherings
+            {t.description}
           </p>
         </motion.div>
 
@@ -159,7 +110,7 @@ const EventsCalendar = () => {
                     whileTap={{ scale: 0.95 }}
                     className="mt-4 w-full py-3 bg-gradient-to-r from-red-500 to-red-700 text-white rounded-xl font-bold hover:shadow-lg transition-all"
                   >
-                    View Details
+                    {t.button}
                   </motion.button>
                 </div>
               </motion.div>

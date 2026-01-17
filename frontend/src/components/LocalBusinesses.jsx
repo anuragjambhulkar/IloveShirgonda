@@ -2,93 +2,46 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaStore, FaUtensils, FaShoppingBag, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 import axios from 'axios';
+import { data } from '../data';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 const LocalBusinesses = () => {
+  const t = data.businesses;
   const [businesses, setBusinesses] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [loading, setLoading] = useState(true);
 
   const categories = ['All', 'Restaurant', 'Shop', 'Service', 'Grocery'];
 
-  useEffect(() => {
-    fetchBusinesses();
-  }, []);
-
-  const fetchBusinesses = async () => {
-    try {
-      const response = await axios.get(`${API}/businesses`);
-      if (response.data.length > 0) {
-        setBusinesses(response.data);
-      } else {
-        setBusinesses(mockBusinesses);
-      }
-    } catch (error) {
-      console.error('Error fetching businesses:', error);
-      setBusinesses(mockBusinesses);
-    } finally {
-      setLoading(false);
-    }
+  const categoryMap = {
+    'All': t.categories.all,
+    'Restaurant': t.categories.restaurant,
+    'Shop': t.categories.shop,
+    'Service': t.categories.service,
+    'Grocery': t.categories.grocery
   };
 
-  const mockBusinesses = [
-    {
-      id: '1',
-      name: 'Shrigonda Sweets & Snacks',
-      category: 'Restaurant',
-      description: 'Traditional Maharashtrian sweets and authentic local snacks. Famous for puran poli and modak.',
-      contact: '+91 98765 43210',
-      address: 'Main Market Road, Shrigonda',
-      image_url: 'https://images.pexels.com/photos/259780/pexels-photo-259780.jpeg'
-    },
-    {
-      id: '2',
-      name: 'Village Handicrafts',
-      category: 'Shop',
-      description: 'Authentic handmade crafts, traditional pottery, and local artwork by village artisans.',
-      contact: '+91 98765 43211',
-      address: 'Arts Colony, Shrigonda',
-      image_url: 'https://images.unsplash.com/photo-1663513844814-5f2fd51e957a'
-    },
-    {
-      id: '3',
-      name: 'Shri Krishna General Store',
-      category: 'Grocery',
-      description: 'Your one-stop shop for daily essentials, fresh produce, and household items.',
-      contact: '+91 98765 43212',
-      address: 'Near Temple, Shrigonda',
-      image_url: 'https://images.unsplash.com/photo-1672603586237-343746cfb8fe'
-    },
-    {
-      id: '4',
-      name: 'Traditional Tea House',
-      category: 'Restaurant',
-      description: 'Serving authentic chai, vada pav, and traditional breakfast items since 1980.',
-      contact: '+91 98765 43213',
-      address: 'Bus Stand Area, Shrigonda',
-      image_url: 'https://images.unsplash.com/photo-1634874706682-3468a6e421ba'
-    },
-    {
-      id: '5',
-      name: 'Farm Fresh Produce',
-      category: 'Shop',
-      description: 'Organic vegetables and fruits directly from local farms to your table.',
-      contact: '+91 98765 43214',
-      address: 'Village Market, Shrigonda',
-      image_url: 'https://images.unsplash.com/photo-1651678938586-affccc71c270'
-    },
-    {
-      id: '6',
-      name: 'Village Medical Center',
-      category: 'Service',
-      description: 'Quality healthcare services with experienced doctors available 24/7.',
-      contact: '+91 98765 43215',
-      address: 'Hospital Road, Shrigonda',
-      image_url: 'https://images.unsplash.com/photo-1622354573449-ce732931783f'
-    }
-  ];
+  useEffect(() => {
+    const fetchBusinesses = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`${API}/businesses`);
+        if (response.data && response.data.length > 0) {
+          setBusinesses(response.data);
+        } else {
+          setBusinesses(t.items);
+        }
+      } catch (error) {
+        console.error('Error fetching businesses:', error);
+        setBusinesses(t.items);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBusinesses();
+  }, [t.items]);
 
   const getIcon = (category) => {
     switch (category) {
@@ -117,10 +70,10 @@ const LocalBusinesses = () => {
           viewport={{ once: true }}
           className="text-center mb-12">
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            Local <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">Businesses</span>
+            {t.title} <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">{t.subtitle}</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Support our local businesses and discover authentic village services
+            {t.description}
           </p>
         </motion.div>
 
@@ -136,13 +89,12 @@ const LocalBusinesses = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-3 rounded-full font-medium transition-all ${
-                selectedCategory === category
-                  ? 'bg-gradient-to-r from-red-500 to-red-700 text-white shadow-lg'
-                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
-              }`}
+              className={`px-6 py-3 rounded-full font-medium transition-all ${selectedCategory === category
+                ? 'bg-gradient-to-r from-red-500 to-red-700 text-white shadow-lg'
+                : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                }`}
             >
-              {category}
+              {categoryMap[category] || category}
             </motion.button>
           ))}
         </motion.div>
@@ -181,7 +133,7 @@ const LocalBusinesses = () => {
                     </div>
                     <div className="absolute top-4 right-4">
                       <span className="px-3 py-1 bg-[#C9933E] text-white text-xs rounded-full font-medium">
-                        {business.category}
+                        {categoryMap[business.category] || business.category}
                       </span>
                     </div>
                   </div>
@@ -190,7 +142,7 @@ const LocalBusinesses = () => {
                   <div className="p-6 space-y-3">
                     <h3 className="text-xl font-bold text-gray-900">{business.name}</h3>
                     <p className="text-gray-600 text-sm leading-relaxed">{business.description}</p>
-                    
+
                     {/* Contact Info */}
                     <div className="space-y-2 pt-2">
                       {business.contact && (
@@ -212,7 +164,7 @@ const LocalBusinesses = () => {
                       whileTap={{ scale: 0.95 }}
                       className="mt-4 w-full py-2 bg-gradient-to-r from-red-500 to-red-700 text-white rounded-lg font-medium hover:shadow-lg transition-all"
                     >
-                      Contact Business
+                      {t.button}
                     </motion.button>
                   </div>
                 </motion.div>

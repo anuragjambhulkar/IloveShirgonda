@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX } from 'react-icons/fi';
 import axios from 'axios';
+import { data } from '../data';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 const PhotoGallery = () => {
+  const t = data.gallery;
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedImage, setSelectedImage] = useState(null);
   const [images, setImages] = useState([]);
@@ -14,106 +16,35 @@ const PhotoGallery = () => {
 
   const categories = ['All', 'College', 'StBusstand', 'Dharmveerford', 'People', 'Events', 'Food'];
 
-  useEffect(() => {
-    fetchGalleryImages();
-  }, []);
-
-  const fetchGalleryImages = async () => {
-    try {
-      const response = await axios.get(`${API}/gallery`);
-      if (response.data.length > 0) {
-        setImages(response.data);
-      } else {
-        // Mock data if API returns empty
-        setImages(mockImages);
-      }
-    } catch (error) {
-      console.error('Error fetching gallery:', error);
-      setImages(mockImages);
-    } finally {
-      setLoading(false);
-    }
+  const categoryMap = {
+    'All': t.categories.all,
+    'College': t.categories.college,
+    'StBusstand': t.categories.busstand,
+    'Dharmveerford': t.categories.fort,
+    'People': t.categories.people,
+    'Events': t.categories.events,
+    'Food': t.categories.food
   };
 
-  const mockImages = [
-    {
-      id: '1',
-      title: 'Pedgaon Fort',
-      category: 'Dharmveerford',
-      image_url: '/asset/Dharmveer_ford.jpg',
-      description: 'Historic Pedgaon Fort, also known as Dharmveer Gad.'
-    },
-    {
-      id: '2',
-      title: 'Pedgaon Fort Entrance',
-      category: 'Dharmveerford',
-      image_url: '/asset/DHARMVEER FORD.jpg',
-      description: 'The grand entrance to the historic Pedgaon Fort.'
-    },
-    {
-      id: '3',
-      title: 'Shri Sant Shaikh Mohammad Maharaj Temple',
-      category: 'People',
-      image_url: '/asset/SHRI SANT SHAIKH MOHAMMAD MAHARAJ.jpeg',
-      description: 'A revered shrine in Shrigonda.'
-    },
-    {
-      id: '4',
-      title: 'Shrigonda Temple',
-      category: 'Events',
-      image_url: '/asset/SHRIGONDA MANDIR.jpeg',
-      description: 'A beautiful temple in Shrigonda, a center for local events.'
-    },
-    {
-      id: '5',
-      title: 'Shrigonda Town',
-      category: 'StBusstand',
-      image_url: '/asset/SHRIGONDA.jpeg',
-      description: 'A view of Shrigonda town.'
-    },
-    {
-      id: '6',
-      title: 'Pedgaon Fort View',
-      category: 'Dharmveerford',
-      image_url: '/asset/Dharmveer Gad pedgoan.jpeg',
-      description: 'A scenic view from Pedgaon Fort.'
-    },
-    {
-      id: '7',
-      title: 'Another view of Pedgaon Fort',
-      category: 'Dharmveerford',
-      image_url: '/asset/Dharmveer Gad pedgoan.jpeg',
-      description: 'Architectural details of Pedgaon Fort.'
-    },
-     {
-      id: '8',
-      title: 'Random image',
-      category: 'Events',
-      image_url: '/asset/images (7).jpeg',
-      description: 'A random image.'
-    },
-    {
-      id: '9',
-      title: 'Shri Chhatrapati Shivaji Mahavidyalaya',
-      category: 'College',
-      image_url: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1',
-      description: 'One of the prominent colleges in Shrigonda, offering a range of courses.'
-    },
-    {
-      id: '10',
-      title: 'Maharaja Jivajirao Shinde Arts, Science & Commerce College',
-      category: 'College',
-      image_url: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f',
-      description: 'A well-known college for arts, science, and commerce education.'
-    },
-    {
-      id: '11',
-      title: 'Soniya Gandhi Polytechnic',
-      category: 'College',
-      image_url: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f',
-      description: 'A polytechnic college providing technical education to students.'
-    }
-  ];
+  useEffect(() => {
+    const fetchGalleryImages = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`${API}/gallery`);
+        if (response.data && response.data.length > 0) {
+          setImages(response.data);
+        } else {
+          setImages(t.items);
+        }
+      } catch (error) {
+        console.error('Error fetching gallery images:', error);
+        setImages(t.items);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchGalleryImages();
+  }, [t.items]);
 
   const filteredImages = selectedCategory === 'All'
     ? images
@@ -130,10 +61,10 @@ const PhotoGallery = () => {
           className="text-center mb-12"
         >
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            Photo <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">Gallery</span>
+            {t.title} <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">{t.subtitle}</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Explore the beauty and culture of Shrigonda through our lens
+            {t.description}
           </p>
         </motion.div>
 
@@ -148,15 +79,14 @@ const PhotoGallery = () => {
             <motion.button
               key={category}
               whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ scale: 2.95 }}
               onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-3 rounded-full font-medium transition-all ${
-                selectedCategory === category
-                  ? 'bg-gradient-to-r from-red-500 to-red-700 text-white shadow-lg'
-                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
-              }`}
+              className={`px-6 py-3 rounded-full font-medium transition-all ${selectedCategory === category
+                ? 'bg-gradient-to-r from-red-500 to-red-700 text-white shadow-lg'
+                : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                }`}
             >
-              {category}
+              {categoryMap[category] || category}
             </motion.button>
           ))}
         </motion.div>
@@ -192,12 +122,12 @@ const PhotoGallery = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="absolute bottom-0 left-0 right-0 p-4">
                       <h3 className="text-white font-bold text-lg">{image.title}</h3>
-                      <p className="text-white/80 text-sm">{image.category}</p>
+                      <p className="text-white/80 text-sm">{categoryMap[image.category] || image.category}</p>
                     </div>
                   </div>
                   <div className="absolute top-3 right-3">
                     <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-gray-700">
-                      {image.category}
+                      {categoryMap[image.category] || image.category}
                     </span>
                   </div>
                 </motion.div>

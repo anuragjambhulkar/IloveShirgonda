@@ -2,65 +2,36 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaNewspaper, FaClock, FaArrowRight } from 'react-icons/fa';
 import axios from 'axios';
+import { data } from '../data';
 import { format } from 'date-fns';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 const NewsUpdates = () => {
+  const t = data.news;
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchNews();
-  }, []);
-
-  const fetchNews = async () => {
-    try {
-      const response = await axios.get(`${API}/news`);
-      if (response.data.length > 0) {
-        setNews(response.data);
-      } else {
-        setNews(mockNews);
+    const fetchNews = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`${API}/news`);
+        if (response.data && response.data.length > 0) {
+          setNews(response.data);
+        } else {
+          setNews(t.items);
+        }
+      } catch (error) {
+        console.error('Error fetching news:', error);
+        setNews(t.items);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error('Error fetching news:', error);
-      setNews(mockNews);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const mockNews = [
-    {
-      id: '1',
-      title: 'MP Nilesh Lanke Discusses Local Development',
-      content: 'MP Nilesh Lanke visited Shrigonda and addressed key issues, emphasizing the importance of youth opportunities and criticizing government inaction on farmer issues.',
-      image_url: '/asset/SHRIGONDA.jpeg',
-      published_at: new Date('2025-10-26').toISOString()
-    },
-    {
-      id: '2',
-      title: 'Shrigonda Municipal Council Elections Gain Momentum',
-      content: 'With the upcoming Municipal Council elections, political activity is increasing in Shrigonda. Aspirants are preparing their campaigns, and reservation policies are expected to play a key role.',
-      image_url: '/asset/images (7).jpeg',
-      published_at: new Date('2025-10-25').toISOString()
-    },
-    {
-      id: '3',
-      title: 'Action Taken Against Illegal Sand Mining',
-      content: 'Tehsildar Milind Kulthe has taken a strong stance against illegal sand mining in the area, with recent actions leading to the destruction of equipment used for illegal activities.',
-      image_url: '/asset/Dharmveer Gad pedgoan 1.jpg',
-      published_at: new Date('2025-10-20').toISOString()
-    },
-    {
-      id: '4',
-      title: 'Belwandi Vyapari Patsanstha Distributes Dividends',
-      content: 'The Belwandi Vyapari Patsanstha announced a 15% dividend for its members and honored meritorious individuals in a recent event, highlighting the cooperative\'s success.',
-      image_url: '/asset/SHRIGONDA MANDIR.jpeg',
-      published_at: new Date('2025-10-18').toISOString()
-    }
-  ];
+    };
+    fetchNews();
+  }, [t.items]);
 
   return (
     <section className="py-20 bg-white">
@@ -72,10 +43,10 @@ const NewsUpdates = () => {
           viewport={{ once: true }}
           className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            News & <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">Updates</span>
+            {t.title} <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">{t.subtitle}</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Stay informed with the latest happenings in our village
+            {t.description}
           </p>
         </motion.div>
 
@@ -135,7 +106,7 @@ const NewsUpdates = () => {
                     whileHover={{ x: 5 }}
                     className="flex items-center space-x-2 text-[#C9933E] font-bold hover:text-[#E74C3C] transition-colors"
                   >
-                    <span>Read More</span>
+                    <span>{t.button}</span>
                     <FaArrowRight />
                   </motion.button>
                 </div>

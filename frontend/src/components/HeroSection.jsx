@@ -3,8 +3,10 @@ import { motion } from 'framer-motion';
 import { FaArrowDown, FaMapMarkerAlt, FaUsers, FaHeart } from 'react-icons/fa';
 import { Button } from './ui/button';
 import SplitText from './ui/splitText';
+import { data } from '../data';
 
 const HeroSection = () => {
+  const t = data.hero;
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -86,7 +88,7 @@ const HeroSection = () => {
               <div className="absolute inset-0 bg-white rounded-full blur-3xl opacity-40"></div>
               <img
                 src="/asset/logo-hero-section.png" // Directly reference the image from the public folder
-                alt="I Love Shrigonda Logo"
+                alt={t.logoAlt}
                 className="w-48 h-48 sm:w-64 sm:h-64 object-contain relative drop-shadow-2xl"
               />
             </div>
@@ -97,7 +99,7 @@ const HeroSection = () => {
             <div className="text-5xl sm:text-7xl md:text-8xl font-bold drop-shadow-2xl flex flex-wrap justify-center items-center gap-3">
               <SplitText
                 tag="h1"
-                text="Welcome to Shrigonda"
+                text={t.welcome}
                 className="text-white inline-block"
                 splitType="chars"
                 delay={40}
@@ -110,7 +112,7 @@ const HeroSection = () => {
               transition={{ delay: 0.6 }}
               className="text-xl sm:text-2xl md:text-3xl text-white/90 font-medium max-w-3xl mx-auto"
             >
-              Discover the heart and soul of our beautiful village
+              {t.description}
             </motion.p>
           </div>
 
@@ -122,9 +124,9 @@ const HeroSection = () => {
             className="flex flex-wrap justify-center gap-6 sm:gap-12 pt-8"
           >
             {[
-              { icon: FaMapMarkerAlt, label: 'Maharashtra, India', value: 'Ahmednagar District' },
-              { icon: FaUsers, label: 'Community', value: '10,000+ People' },
-              { icon: FaHeart, label: 'Heritage', value: 'Rich Culture' }
+              { icon: FaMapMarkerAlt, label: t.stats.location.label, value: t.stats.location.value },
+              { icon: FaUsers, label: t.stats.community.label, value: t.stats.community.value },
+              { icon: FaHeart, label: t.stats.heritage.label, value: t.stats.heritage.value }
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
@@ -153,14 +155,14 @@ const HeroSection = () => {
               onClick={scrollToGallery}
               className="px-8 py-4 bg-white text-[#C9933E] rounded-full font-bold text-lg shadow-2xl hover:bg-amber-50 transition-all"
             >
-              Explore Gallery
+              {t.buttons.explore}
             </Button>
             <Button
               borderRadius="1.75rem"
               onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
               className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white/10 transition-all backdrop-blur-sm"
             >
-              Get In Touch
+              {t.buttons.contact}
             </Button>
           </motion.div>
 

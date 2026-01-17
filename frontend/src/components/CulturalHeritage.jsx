@@ -1,46 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaLandmark, FaHistory, FaChurch } from 'react-icons/fa';
+import { data } from '../data';
 
 const CulturalHeritage = () => {
-  const heritageItems = [
-    {
-      id: 1,
-      icon: FaHistory,
-      title: 'Shri Sant Shaikh Mohmand Maharaj',
-      description: 'Shri Sant Shaikh Mohmand Maharaj was a revered spiritual leader known for his deep wisdom, compassion, and guidance. Celebrated for his teachings on devotion, selflessness, and service to humanity, he inspired countless followers to lead a life of righteousness and inner peace. His life and works continue to be a beacon of spiritual enlightenment, drawing devotees from far and wide to seek blessings and spiritual knowledge.',
-      image: '/asset/SHRI SANT SHAIKH MOHAMMAD MAHARAJ.jpeg',
-      facts: [
-        'Renowned spiritual leader',
-        'Guided followers in devotion and selfless service',
-        'Inspires spiritual seekers across the region'
-      ]
-    },
-    {
-      id: 2,
-      icon: FaHistory, // Suitable icon for fort/historical site
-      title: 'Pedgaon Fort (Bahadurgad/Dharmaveergad)',
-      description: 'Situated approximately 22 km south of Shrigonda, Pedgaon Fort stands as a testament to the region\'s strategic importance. The fort houses five temples, including the Lakshmi Narayan and Baleshwar temples, showcasing intricately carved pillars and historical remnants from bygone eras.',
-      image: '/asset/Dharmveer_ford.jpg',
-      facts: [
-        'Historical fort with 5 temples',
-        'Intricate architecture and carvings',
-        'Strategically important in history'
-      ]
-    },
-    {
-      id: 3,
-      icon: FaLandmark,
-      title: 'Hemadpanti Temples',
-      description: 'Shrigonda is home to four Hemadpanti temples, showcasing the distinctive Hemadpanthi architectural style characterized by black stone construction without mortar. These 13th-century temples reflect the region\'s rich cultural and religious heritage.',
-      image: '/asset/SHRIGONDA MANDIR.jpeg',
-      facts: [
-        'Distinctive Hemadpanthi architecture',
-        'Built using black stone without mortar',
-        'Dating back to 13th century'
-      ]
-    }
-  ];
+  const t = data.heritage;
+
+  // Icons mapping for the items
+  const iconMap = [FaHistory, FaHistory, FaLandmark];
+
+  const heritageItems = t.items.map((item, index) => ({
+    ...item,
+    icon: iconMap[index] || FaLandmark
+  }));
 
   return (
     <section id="heritage" className="py-20 bg-white">
@@ -52,10 +24,10 @@ const CulturalHeritage = () => {
           viewport={{ once: true }}
           className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            Cultural <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">Heritage</span>
+            {t.title} <span className="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">{t.subtitle}</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Discover the rich cultural tapestry and historical significance of Shrigonda
+            {t.description}
           </p>
         </motion.div>
 
@@ -122,7 +94,7 @@ const CulturalHeritage = () => {
                   whileTap={{ scale: 0.95 }}
                   className="mt-6 px-8 py-3 bg-gradient-to-r from-red-500 to-red-700 text-white rounded-full font-bold shadow-lg hover:shadow-xl transition-all"
                 >
-                  Learn More
+                  {t.button}
                 </motion.button>
               </div>
             </motion.div>

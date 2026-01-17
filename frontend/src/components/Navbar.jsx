@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { FaHeart } from 'react-icons/fa';
+import { data } from '../data';
 
 const Navbar = () => {
+  const t = data.navbar;
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -16,14 +18,14 @@ const Navbar = () => {
   }, []);
 
   const menuItems = [
-    { name: 'Home', href: '#hero' },
-    { name: 'Gallery', href: '#gallery' },
-    { name: 'Heritage', href: '#heritage' },
-    { name: 'Attractions', href: '#attractions' },
-    { name: 'Businesses', href: '#businesses' },
-    { name: 'Stories', href: '#stories' },
-    { name: 'Events', href: '#events' },
-    { name: 'Contact', href: '#contact' }
+    { name: t.menu.home, href: '#hero' },
+    { name: t.menu.gallery, href: '#gallery' },
+    { name: t.menu.heritage, href: '#heritage' },
+    { name: t.menu.attractions, href: '#attractions' },
+    { name: t.menu.businesses, href: '#businesses' },
+    { name: t.menu.stories, href: '#stories' },
+    { name: t.menu.events, href: '#events' },
+    { name: t.menu.contact, href: '#contact' }
   ];
 
   const scrollToSection = (href) => {
@@ -60,9 +62,9 @@ const Navbar = () => {
               </div>
               <div>
                 <h1 className={`text-2xl font-bold font-serif bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent`}>
-                  Shrigonda
+                  {t.brand}
                 </h1>
-                <p className="text-xs font-serif text-gray-600">Your Love for the City</p>
+                <p className="text-xs font-serif text-gray-600">{t.tagline}</p>
               </div>
             </motion.div>
 
