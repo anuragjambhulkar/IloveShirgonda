@@ -218,7 +218,7 @@ export const data = {
                 name: "श्रीगोंदा स्वीट्स आणि स्नॅक्स",
                 category: "Restaurant",
                 description: "पारंपारिक महाराष्ट्रीयन मिठाई आणि अस्सल स्थानिक स्नॅक्स. पुरणपोळी आणि मोदकासाठी प्रसिद्ध.",
-                contact: "+91 98765 43210",
+                contact: "+91 93078 40449",
                 address: "मुख्य बाजार रस्ता, श्रीगोंदा",
                 image_url: "https://images.pexels.com/photos/259780/pexels-photo-259780.jpeg"
             },
@@ -227,7 +227,7 @@ export const data = {
                 name: "व्हिलेज हस्तकला",
                 category: "Shop",
                 description: "गावच्या कारागिरांनी बनवलेल्या अस्सल हाताने बनवलेल्या वस्तू, पारंपारिक मातीची भांडी आणि स्थानिक कलाकृती.",
-                contact: "+91 98765 43211",
+                contact: "+91 93078 40449",
                 address: "कला वसाहत, श्रीगोंदा",
                 image_url: "https://images.unsplash.com/photo-1663513844814-5f2fd51e957a"
             },
@@ -236,7 +236,7 @@ export const data = {
                 name: "श्री कृष्ण जनरल स्टोअर",
                 category: "Grocery",
                 description: "दैनंदिन गरजा, ताजी उत्पादने आणि घरगुती वस्तूंसाठी तुमचे एकमेव दुकान.",
-                contact: "+91 98765 43212",
+                contact: "+91 93078 40449",
                 address: "मंदिराजवळ, श्रीगोंदा",
                 image_url: "https://images.unsplash.com/photo-1672603586237-343746cfb8fe"
             },
@@ -245,7 +245,7 @@ export const data = {
                 name: "पारंपारिक चहा गृह",
                 category: "Restaurant",
                 description: "१९८० पासून अस्सल चहा, वडापाव आणि पारंपारिक नाश्ता देत आहोत.",
-                contact: "+91 98765 43213",
+                contact: "+91 93078 40449",
                 address: "बसस्थानक परिसर, श्रीगोंदा",
                 image_url: "https://images.unsplash.com/photo-1634874706682-3468a6e421ba"
             },
@@ -254,7 +254,7 @@ export const data = {
                 name: "फार्म फ्रेश उत्पादने",
                 category: "Shop",
                 description: "थेट स्थानिक शेतातून तुमच्या टेबलावर जाणाऱ्या सेंद्रिय भाज्या आणि फळे.",
-                contact: "+91 98765 43214",
+                contact: "+91 93078 40449",
                 address: "गावचा बाजार, श्रीगोंदा",
                 image_url: "https://images.unsplash.com/photo-1651678938586-affccc71c270"
             },
@@ -263,7 +263,7 @@ export const data = {
                 name: "व्हिलेज मेडिकल सेंटर",
                 category: "Service",
                 description: "अनुभवी डॉक्टरांच्या उपस्थितीत २४/७ दर्जेदार आरोग्य सेवा उपलब्ध.",
-                contact: "+91 98765 43215",
+                contact: "+91 93078 40449",
                 address: "हॉस्पिटल रोड, श्रीगोंदा",
                 image_url: "https://images.unsplash.com/photo-1622354573449-ce732931783f"
             }
@@ -408,8 +408,8 @@ export const data = {
             phone: "मोबाईल नंबर",
             message: "संदेश *",
             placeholderName: "तुमचे नाव प्रविष्ट करा",
-            placeholderEmail: "तुमचा.ईमेल@उदाहरण.कॉम",
-            placeholderPhone: "+९१ ९८७६५ ४३२१०",
+            placeholderEmail: "iloveshrigonda96@gmail.com",
+            placeholderPhone: "+91 93078 40449",
             placeholderMessage: "आम्ही तुम्हाला कशी मदत करू शकतो ते सांगा...",
             button: "संदेश पाठवा",
             success: "संदेश यशस्वीरित्या पाठवला गेला! आम्ही लवकरच तुमच्याशी संपर्क साधू.",

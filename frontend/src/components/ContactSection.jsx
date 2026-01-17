@@ -45,8 +45,8 @@ const ContactSection = () => {
     {
       icon: FaEnvelope,
       title: t.info.email,
-      value: 'hello@iloveshrigonda.com',
-      link: 'mailto:hello@iloveshrigonda.com'
+      value: 'iloveshrigonda96@gmail.com',
+      link: 'mailto:iloveshrigonda96@gmail.com'
     },
     {
       icon: FaPhone,
