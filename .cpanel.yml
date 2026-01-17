@@ -3,10 +3,15 @@ deployment:
     # Paths
     - export DEPLOYPATH=/home/iloveshr/public_html/
     - export LOGFILE=/home/iloveshr/deploy.log
-    - export PATH=$PATH:/usr/local/bin
+    - export PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/cpanel/ea-nodejs22/bin:/opt/cpanel/ea-nodejs20/bin:/opt/cpanel/ea-nodejs18/bin:/opt/cpanel/ea-nodejs16/bin:$PATH
 
     # Log start
     - echo "=== DEPLOY START $(date) ===" >> $LOGFILE
+    
+    # Debug Env
+    - echo "Path: $PATH" >> $LOGFILE
+    - whoami >> $LOGFILE
+    - npm -v >> $LOGFILE 2>&1
 
     # Go to frontend
     - cd frontend >> $LOGFILE 2>&1
