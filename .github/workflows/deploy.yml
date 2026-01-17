@@ -1,0 +1,50 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'frontend/build/**'  # Important: Ignore changes to build folder to prevent loops
+      - '.cpanel.yml'
+      - 'README.md'
+
+permissions:
+  contents: write  # Critical: Allows the Action to push back to the repo
+
+jobs:
+  build-and-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        working-directory: ./frontend
+        run: npm install
+
+      - name: Build Project
+        working-directory: ./frontend
+        run: npm run build
+
+      - name: Commit and Push Build Artifacts
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          
+          # Force add the build folder (in case it's ignored locally)
+          git add -f frontend/build
+          
+          # Commit if there are changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Deploy: Update build artifacts [skip ci]"
+            git push
+          fi
