@@ -1,0 +1,27 @@
+deployment:
+  tasks:
+    # Paths
+    - export DEPLOYPATH=/home/iloveshr/public_html/
+    - export LOGFILE=/home/iloveshr/deploy.log
+    - export PATH=$PATH:/usr/local/bin
+
+    # Log start
+    - echo "=== DEPLOY START $(date) ===" >> $LOGFILE
+
+    # Go to frontend
+    - cd frontend >> $LOGFILE 2>&1
+
+    # Install deps
+    - npm install >> $LOGFILE 2>&1
+
+    # Build frontend
+    - npm run build >> $LOGFILE 2>&1
+
+    # Clean old site (Safer cleanup)
+    - /bin/rm -rf $DEPLOYPATH/index.html $DEPLOYPATH/static >> $LOGFILE 2>&1
+
+    # Deploy build only
+    - /bin/cp -R build/* $DEPLOYPATH >> $LOGFILE 2>&1
+
+    # Log end
+    - echo "=== DEPLOY END $(date) ===" >> $LOGFILE
