@@ -4,6 +4,8 @@ import { FaNewspaper, FaClock, FaArrowRight } from 'react-icons/fa';
 import axios from 'axios';
 import { data } from '../data';
 import { format } from 'date-fns';
+import GoogleSheetService from '../services/googleSheetService';
+import { SHEET_URLS } from '../sheetConfig';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -17,6 +19,17 @@ const NewsUpdates = () => {
     const fetchNews = async () => {
       try {
         setLoading(true);
+
+        // 1. Try Google Sheet
+        if (SHEET_URLS.news) {
+          const sheetData = await GoogleSheetService.fetchData(SHEET_URLS.news);
+          if (sheetData.length > 0) {
+            setNews(sheetData);
+            return; // Exit if successful
+          }
+        }
+
+        // 2. Try Backend API
         const response = await axios.get(`${API}/news`);
         if (response.data && response.data.length > 0) {
           setNews(response.data);

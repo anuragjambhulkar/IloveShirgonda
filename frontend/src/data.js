@@ -3,42 +3,42 @@ export const data = {
         brand: "Shrigonda",
         tagline: "शहरासाठी तुमचे प्रेम",
         menu: {
-            home: "मुख्यपृष्ठ",
-            gallery: "गॅलरी",
-            heritage: "वारसा",
-            attractions: "आकर्षणे",
-            businesses: "व्यवसाय",
-            stories: "कथा",
-            events: "कार्यक्रम",
-            contact: "संपर्क"
+            home: "Home",
+            gallery: "Gallery",
+            heritage: "Heritage",
+            attractions: "Attractions",
+            businesses: "Businesses",
+            stories: "Stories",
+            events: "Events",
+            contact: "Contact"
         }
     },
     hero: {
-        welcome: "श्रीगोंदामध्ये आपले स्वागत आहे",
-        description: "आमच्या सुंदर गावाचे हृदय आणि आत्मा शोधा",
+        welcome: "Welcome to Shrigonda",
+        description: "Discover the heart and soul of our beautiful town",
         stats: {
-            location: { label: "महाराष्ट्र, भारत", value: "अहमदनगर जिल्हा" },
-            community: { label: "समुदाय", value: "१०,०००+ लोक" },
-            heritage: { label: "वारसा", value: "समृद्ध संस्कृती" }
+            location: { label: "Maharashtra, India", value: "Ahmednagar District" },
+            community: { label: "Community", value: "10,000+ People" },
+            heritage: { label: "Heritage", value: "Rich Culture" }
         },
         buttons: {
-            explore: "गॅलरी एक्सप्लोर करा",
-            contact: "संपर्क साधा"
+            explore: "Explore Gallery",
+            contact: "Contact Us"
         },
-        logoAlt: "आय लव श्रीगोंदा लोगो"
+        logoAlt: "I Love Shrigonda Logo"
     },
     gallery: {
-        title: "फोटो",
-        subtitle: "गॅलरी",
-        description: "आमच्या नजरेतून श्रीगोंद्याचे सौंदर्य आणि संस्कृती एक्सप्लोर करा",
+        title: "Photo",
+        subtitle: "Gallery",
+        description: "Explore the beauty and culture of Shrigonda through our eyes",
         categories: {
-            all: "सर्व",
-            college: "महाविद्यालय",
-            busstand: "एसटी बसस्थानक",
-            fort: "धर्मवीरगड",
-            people: "लोक",
-            events: "कार्यक्रम",
-            food: "खाद्यपदार्थ"
+            all: "All",
+            college: "College",
+            busstand: "Bus Stand",
+            fort: "Dharmveer Gad",
+            people: "People",
+            events: "Events",
+            food: "Food"
         },
         items: [
             {
@@ -121,9 +121,9 @@ export const data = {
         ]
     },
     heritage: {
-        title: "सांस्कृतिक",
-        subtitle: "वारसा",
-        description: "श्रीगोंद्याचा समृद्ध सांस्कृतिक वारसा आणि ऐतिहासिक महत्त्व शोधा",
+        title: "Cultural",
+        subtitle: "Heritage",
+        description: "Discover Shrigonda's rich cultural heritage and historical significance",
         items: [
             {
                 id: 1,
@@ -159,12 +159,12 @@ export const data = {
                 ]
             }
         ],
-        button: "अधिक जाणून घ्या"
+        button: "Learn More"
     },
     attractions: {
-        title: "पर्यटन",
-        subtitle: "आकर्षणे",
-        description: "श्रीगोंद्यातील प्रेक्षणीय स्थळे आणि लपलेली रत्ने शोधा",
+        title: "Tourist",
+        subtitle: "Attractions",
+        description: "Discover the sights and hidden gems of Shrigonda",
         items: [
             {
                 id: 1,
@@ -199,18 +199,18 @@ export const data = {
                 highlights: ["प्राचीन मंदिर", "नदी संगम", "वास्तुकला"]
             }
         ],
-        button: "भेट द्या"
+        button: "Visit"
     },
     businesses: {
-        title: "स्थानिक",
-        subtitle: "व्यवसाय",
-        description: "आमच्या स्थानिक व्यवसायांना पाठिंबा द्या आणि अस्सल गाव सेवा शोधा",
+        title: "Local",
+        subtitle: "Businesses",
+        description: "Support our local businesses and find authentic village services",
         categories: {
-            all: "सर्व",
-            restaurant: "रेस्टॉरंट",
-            shop: "दुकान",
-            service: "सेवा",
-            grocery: "किराणा"
+            all: "All",
+            restaurant: "Restaurant",
+            shop: "Shop",
+            service: "Service",
+            grocery: "Grocery"
         },
         items: [
             {
@@ -268,12 +268,12 @@ export const data = {
                 image_url: "https://images.unsplash.com/photo-1622354573449-ce732931783f"
             }
         ],
-        button: "व्यवसायाशी संपर्क साधा"
+        button: "Contact Business"
     },
     stories: {
-        title: "समुदाय",
-        subtitle: "कथा",
-        description: "आमच्या समुदायातील सदस्यांच्या मनातून ऐका",
+        title: "Community",
+        subtitle: "Stories",
+        description: "Hear from the hearts of our community members",
         items: [
             {
                 id: '1',
@@ -301,15 +301,15 @@ export const data = {
             }
         ],
         cta: {
-            title: "तुमची कथा शेअर करा",
-            description: "श्रीगोंद्याची एखादी खास आठवण किंवा अनुभव आहे का? आम्हाला तुमच्याकडून ऐकायला आवडेल!",
-            button: "तुमची कथा सबमिट करा"
+            title: "Share Your Story",
+            description: "Do you have a special memory or experience of Shrigonda? We'd love to hear from you!",
+            button: "Submit Your Story"
         }
     },
     news: {
-        title: "बातम्या आणि",
-        subtitle: "अपडेट्स",
-        description: "आमच्या गावातील ताज्या घडामोडींची माहिती मिळवा",
+        title: "News &",
+        subtitle: "Updates",
+        description: "Stay informed about the latest happenings in our town",
         items: [
             {
                 id: '1',
@@ -340,12 +340,12 @@ export const data = {
                 published_at: new Date('2025-10-18').toISOString()
             }
         ],
-        button: "अधिक वाचा"
+        button: "Read More"
     },
     events: {
-        title: "कार्यक्रम",
-        subtitle: "कॅलेंडर",
-        description: "येणारे सण, सांस्कृतिक कार्यक्रम आणि सामुदायिक मेळावे",
+        title: "Event",
+        subtitle: "Calendar",
+        description: "Upcoming festivals, cultural events, and community gatherings",
         items: [
             {
                 id: '1',
@@ -396,47 +396,47 @@ export const data = {
                 image_url: '/asset/SHRIGONDA MANDIR.jpeg'
             }
         ],
-        button: "तपशील पहा"
+        button: "View Details"
     },
     contact: {
-        title: "संपर्क",
-        subtitle: "साधा",
-        description: "तुमच्या काही तक्रारी किंवा प्रश्न असल्यास आम्हाला कळवा!",
+        title: "Contact",
+        subtitle: "Us",
+        description: "Let us know if you have any complaints or queries!",
         form: {
-            name: "पूर्ण नाव *",
-            email: "ईमेल पत्ता *",
-            phone: "मोबाईल नंबर",
-            message: "संदेश *",
-            placeholderName: "तुमचे नाव प्रविष्ट करा",
+            name: "Full Name *",
+            email: "Email Address *",
+            phone: "Mobile Number",
+            message: "Message *",
+            placeholderName: "Enter your name",
             placeholderEmail: "iloveshrigonda96@gmail.com",
             placeholderPhone: "+91 93078 40449",
-            placeholderMessage: "आम्ही तुम्हाला कशी मदत करू शकतो ते सांगा...",
-            button: "संदेश पाठवा",
-            success: "संदेश यशस्वीरित्या पाठवला गेला! आम्ही लवकरच तुमच्याशी संपर्क साधू.",
-            error: "संदेश पाठवण्यास त्रुटी आली. कृपया पुन्हा प्रयत्न करा."
+            placeholderMessage: "Tell us how we can help you...",
+            button: "Send Message",
+            success: "Message sent successfully! We will contact you soon.",
+            error: "Error sending message. Please try again."
         },
         info: {
-            email: "ईमेल",
-            phone: "फोन",
-            location: "स्थान",
-            address: "श्रीगोंदा, अहमदनगर, महाराष्ट्र, भारत"
+            email: "Email",
+            phone: "Phone",
+            location: "Location",
+            address: "Shrigonda, Ahmednagar, Maharashtra, India"
         },
         cta: {
-            title: "श्रीगोंद्याला भेट द्या",
-            description: "आमच्या गावातील आदरातिथ्याचा अनुभव घ्या"
+            title: "Visit Shrigonda",
+            description: "Experience the hospitality of our town"
         }
     },
     footer: {
-        brand: "आय ❤️ श्रीगोंदा",
-        tagline: "शहरासाठी तुमचे प्रेम",
-        description: "आमच्या सुंदर गावाचा समृद्ध वारसा, संस्कृती आणि सामुदायिक भावनेचा उत्सव साजरा करत आहोत.",
-        quickLinks: "त्वरित दुवे",
-        stayUpdated: "अपडेट रहा",
-        newsletterDesc: "नवीनतम अपडेट्स आणि कार्यक्रमांसाठी आमच्या वृत्तपत्राचे सदस्य व्हा.",
-        placeholderEmail: "तुमचा ईमेल",
-        subscribe: "सबस्क्राईब करा",
-        rights: "सर्व हक्क राखीव.",
-        privacy: "गोपनीयता धोरण",
-        terms: "सेवा अटी"
+        brand: "I ❤️ Shrigonda",
+        tagline: "Your Love For The Town",
+        description: "Celebrating the rich heritage, culture, and community spirit of our beautiful town.",
+        quickLinks: "Quick Links",
+        stayUpdated: "Stay Updated",
+        newsletterDesc: "Subscribe to our newsletter for the latest updates and events.",
+        placeholderEmail: "Your Email",
+        subscribe: "Subscribe",
+        rights: "All rights reserved.",
+        privacy: "Privacy Policy",
+        terms: "Terms of Service"
     }
 };

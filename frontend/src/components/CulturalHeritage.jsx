@@ -1,17 +1,64 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaLandmark, FaHistory, FaChurch } from 'react-icons/fa';
+import axios from 'axios';
 import { data } from '../data';
+import GoogleSheetService from '../services/googleSheetService';
+import { SHEET_URLS } from '../sheetConfig';
 
 const CulturalHeritage = () => {
   const t = data.heritage;
+  const [heritageItems, setHeritageItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+  const API = `${BACKEND_URL}/api`;
+
+  useEffect(() => {
+    const fetchHeritage = async () => {
+      try {
+        setLoading(true);
+        // 1. Try Google Sheet
+        if (SHEET_URLS.heritage) {
+          const sheetData = await GoogleSheetService.fetchData(SHEET_URLS.heritage);
+          if (sheetData.length > 0) {
+            setHeritageItems(sheetData);
+            return;
+          }
+        }
+
+        // 2. Try Backend API
+        try {
+          const response = await axios.get(`${API}/heritage`);
+          if (response.data && response.data.length > 0) {
+            setHeritageItems(response.data);
+            return;
+          }
+        } catch (e) {
+          // ignore api error, fallback to static
+        }
+
+        // 3. Fallback
+        setHeritageItems(t.items);
+      } catch (error) {
+        console.error('Error fetching heritage:', error);
+        setHeritageItems(t.items);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchHeritage();
+  }, [t.items]);
 
   // Icons mapping for the items
   const iconMap = [FaHistory, FaHistory, FaLandmark];
 
-  const heritageItems = t.items.map((item, index) => ({
+  const processedItems = heritageItems.map((item, index) => ({
     ...item,
-    icon: iconMap[index] || FaLandmark
+    icon: iconMap[index] || FaLandmark,
+    // Handle CSV string for array
+    facts: Array.isArray(item.facts)
+      ? item.facts
+      : (typeof item.facts === 'string' ? item.facts.split(',').map(s => s.trim()) : [])
   }));
 
   return (
@@ -33,7 +80,7 @@ const CulturalHeritage = () => {
 
         {/* Heritage Items */}
         <div className="space-y-20">
-          {heritageItems.map((item, index) => (
+          {processedItems.map((item, index) => (
             <motion.div
               key={item.id}
               initial={{ opacity: 0, y: 40 }}

@@ -1,17 +1,65 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaLandmark, FaVihara, FaWater, FaGopuram } from 'react-icons/fa';
+import axios from 'axios';
 import { data } from '../data';
+import GoogleSheetService from '../services/googleSheetService';
+import { SHEET_URLS } from '../sheetConfig';
 
 const TouristAttractions = () => {
   const t = data.attractions;
+  const [attractionsItems, setAttractionsItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+  const API = `${BACKEND_URL}/api`;
+
+  useEffect(() => {
+    const fetchAttractions = async () => {
+      try {
+        setLoading(true);
+        // 1. Try Google Sheet
+        if (SHEET_URLS.attractions) {
+          const sheetData = await GoogleSheetService.fetchData(SHEET_URLS.attractions);
+          if (sheetData.length > 0) {
+            setAttractionsItems(sheetData);
+            return;
+          }
+        }
+
+        // 2. Try Backend API
+        try {
+          const response = await axios.get(`${API}/attractions`);
+          if (response.data && response.data.length > 0) {
+            setAttractionsItems(response.data);
+            return;
+          }
+        } catch (e) {
+          // ignore api error, fallback to static
+        }
+
+        // 3. Fallback
+        setAttractionsItems(t.items);
+
+      } catch (error) {
+        console.error('Error fetching attractions:', error);
+        setAttractionsItems(t.items);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAttractions();
+  }, [t.items]);
 
   // Icons mapping for the items
   const iconMap = [FaLandmark, FaVihara, FaWater, FaGopuram];
 
-  const attractions = t.items.map((item, index) => ({
+  const attractions = attractionsItems.map((item, index) => ({
     ...item,
-    icon: iconMap[index] || FaLandmark
+    icon: iconMap[index] || FaLandmark,
+    // Handle CSV string for array
+    highlights: Array.isArray(item.highlights)
+      ? item.highlights
+      : (typeof item.highlights === 'string' ? item.highlights.split(',').map(s => s.trim()) : [])
   }));
 
   return (

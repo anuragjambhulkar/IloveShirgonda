@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiX } from 'react-icons/fi';
 import axios from 'axios';
 import { data } from '../data';
+import GoogleSheetService from '../services/googleSheetService';
+import { SHEET_URLS } from '../sheetConfig';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -30,6 +32,17 @@ const PhotoGallery = () => {
     const fetchGalleryImages = async () => {
       try {
         setLoading(true);
+
+        // 1. Try Google Sheet
+        if (SHEET_URLS.gallery) {
+          const sheetData = await GoogleSheetService.fetchData(SHEET_URLS.gallery);
+          if (sheetData.length > 0) {
+            setImages(sheetData);
+            return;
+          }
+        }
+
+        // 2. Try Backend API
         const response = await axios.get(`${API}/gallery`);
         if (response.data && response.data.length > 0) {
           setImages(response.data);

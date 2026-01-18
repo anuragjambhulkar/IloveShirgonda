@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { FaStore, FaUtensils, FaShoppingBag, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 import axios from 'axios';
 import { data } from '../data';
+import GoogleSheetService from '../services/googleSheetService';
+import { SHEET_URLS } from '../sheetConfig';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -27,6 +29,17 @@ const LocalBusinesses = () => {
     const fetchBusinesses = async () => {
       try {
         setLoading(true);
+
+        // 1. Try Google Sheet
+        if (SHEET_URLS.businesses) {
+          const sheetData = await GoogleSheetService.fetchData(SHEET_URLS.businesses);
+          if (sheetData.length > 0) {
+            setBusinesses(sheetData);
+            return;
+          }
+        }
+
+        // 2. Try Backend API
         const response = await axios.get(`${API}/businesses`);
         if (response.data && response.data.length > 0) {
           setBusinesses(response.data);

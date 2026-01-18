@@ -4,6 +4,8 @@ import { FaCalendarAlt, FaMapMarkerAlt, FaClock } from 'react-icons/fa';
 import axios from 'axios';
 import { data } from '../data';
 import { format } from 'date-fns';
+import GoogleSheetService from '../services/googleSheetService';
+import { SHEET_URLS } from '../sheetConfig';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -17,6 +19,17 @@ const EventsCalendar = () => {
     const fetchEvents = async () => {
       try {
         setLoading(true);
+
+        // 1. Try Google Sheet
+        if (SHEET_URLS.events) {
+          const sheetData = await GoogleSheetService.fetchData(SHEET_URLS.events);
+          if (sheetData.length > 0) {
+            setEvents(sheetData);
+            return;
+          }
+        }
+
+        // 2. Try Backend API
         const response = await axios.get(`${API}/events`);
         if (response.data && response.data.length > 0) {
           setEvents(response.data);
