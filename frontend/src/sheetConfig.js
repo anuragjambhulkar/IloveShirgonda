@@ -12,11 +12,11 @@
  */
 
 export const SHEET_URLS = {
-    news: "",        // Paste News Sheet CSV Link here
-    businesses: "",  // Paste Businesses Sheet CSV Link here
-    events: "",      // Paste Events Sheet CSV Link here
-    gallery: "",     // Paste Gallery Sheet CSV Link here
-    stories: "",     // Paste Stories Sheet CSV Link here
-    attractions: "", // Paste Tourist Attractions Sheet CSV Link here
-    heritage: ""     // Paste Heritage Sheet CSV Link here
+    news: "https://drive.google.com/uc?export=download&id=19vE5XTEbwOAEeGzr054KRrlkWE4y03re",
+    businesses: "https://drive.google.com/uc?export=download&id=1CWkFk8To2ym50Evt3zJlSd8NT4yYcMeV",
+    events: "https://drive.google.com/uc?export=download&id=1_nLiIOcjUxu_-WRRsV6uoaiFhSzW5liL",
+    gallery: "https://drive.google.com/uc?export=download&id=1Zhca15YgJnkuOEljwUzQGtBrlXgG4-sE",
+    stories: "https://drive.google.com/uc?export=download&id=1PiYeec9ctn-4Lbug_v8FKz_LfpIq4iTT",
+    attractions: "https://drive.google.com/uc?export=download&id=10y5jal-K9o3AHj7gpD4Q-SFC_nA9ZKJR",
+    heritage: "https://drive.google.com/uc?export=download&id=19MnCO68jhNHPefsFlY_lCyrYUdC4KTsL"
 };
