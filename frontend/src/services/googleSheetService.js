@@ -22,6 +22,7 @@ const GoogleSheetService = {
                     header: true,
                     skipEmptyLines: true,
                     complete: (results) => {
+                        console.log(`Successfully fetched ${results.data.length} rows from Google Sheet:`, sheetUrl);
                         resolve(results.data);
                     },
                     error: (error) => {

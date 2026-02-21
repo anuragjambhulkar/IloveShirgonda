@@ -101,3 +101,30 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+## user_problem_statement: Fetching data from Google Sheets dynamically is not working.
+## backend:
+##   - task: "Google Sheets Data Fetching"
+##     implemented: true
+##     working: false
+##     file: "backend/server.py" # (Actually implemented in frontend service)
+##     stuck_count: 1
+##     priority: "high"
+##     needs_retesting: true
+##     status_history:
+##         -working: false
+##         -agent: "main"
+##         -comment: "Currently using Google Drive download links which cause CORS errors in the browser. Switching to 'Publish to web' CSV links is required."
+##
+## frontend:
+##   - task: "Dynamic Google Sheets Integration"
+##     implemented: true
+##     working: false
+##     file: "frontend/src/services/googleSheetService.js"
+##     stuck_count: 1
+##     priority: "high"
+##     needs_retesting: true
+##     status_history:
+##         -working: false
+##         -agent: "main"
+##         -comment: "GoogleSheetService uses fetch on links that result in CORS errors. Need to update SHEET_URLS in sheetConfig.js with proper Public to Web CSV links."
